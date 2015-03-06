@@ -1,0 +1,18 @@
+<android.support.v4.widget.SlidingPaneLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_pane_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- Menu Lateral -->
+    <ListView
+        android:id="@+id/left_pane"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/map" tools:context="com.e2g.ecocicle.Mapa"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+</android.support.v4.widget.SlidingPaneLayout>

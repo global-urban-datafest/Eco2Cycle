@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">EcoCycle</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_mapa"></string>
+    <string name="title_activity_login">Login</string>
+    <string name="action_login">Login</string>
+    <string name="action_filter">Filter</string>
+    <string name="title_activity_filter">Filter</string>
+    <string name="title_activity_perfil">Profile</string>
+    <string name="title_activity_leitor_qr">Qr Read</string>
+</resources>
