@@ -1,0 +1,20 @@
+---
+applications:
+- services:
+  - wscicle-sqldb
+  - wscicle-MonitoringAndAnalytics
+  disk_quota: 1024M
+  host: wscicle
+  name: wscicle
+  path: libertyDBApp.war
+  domain: mybluemix.net
+  instances: 1
+  memory: 1024M
+- name: liberty-IRDS
+  memory: 1024M
+  host: ecociclews
+  domain: mybluemix.net
+  env: {
+    }
+  services: {
+    }
