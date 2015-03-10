@@ -1,16 +1,16 @@
 package com.e2g.ecocicle;
 
-import android.app.ProgressDialog;
+//import android.app.FragmentManager;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,15 +18,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.e2g.ecocicle.Model.Pontodetroca;
+import com.e2g.ecocicle.Util.Main;
 import com.e2g.ecocicle.WebService.WebServiceCliente;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,11 +36,12 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class Mapa extends ActionBarActivity implements SlidingPaneLayout.PanelSlideListener{
+public class Mapa extends ActionBarActivity{
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private String[] mPlanetTitles;
 
-    private SlidingPaneLayout mSlidingLayout;
-    private ListView mList;
-    private ProgressDialog progressDialog;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     @Override
@@ -47,88 +50,97 @@ public class Mapa extends ActionBarActivity implements SlidingPaneLayout.PanelSl
         setContentView(R.layout.activity_mapa);
         setUpMapIfNeeded();
 
-//        progressDialog = new ProgressDialog(this);
-//        progressDialog.setMessage("Carregando os pontos de troca!");
-//        progressDialog.show();
+        //itens do menu
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroud_menu)));
+        getSupportActionBar().setTitle("Eco 2 Cycle");
 
-        //Menu dos icones..
-        //=====================================================
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("EcoCycle");
-//        actionBar.setDefaultDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowCustomEnabled(true);
-        //=====================================================
+        //MENU LATERAL
+        mPlanetTitles = getResources().getStringArray(R.array.options_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mSlidingLayout = (SlidingPaneLayout)
-                findViewById(R.id.sliding_pane_layout);
-        mSlidingLayout.setPanelSlideListener(this);
+        //Efeito lateral
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        String[] opcoes = null;
-        if(((Main)getApplication()).isLogado()){
-            opcoes = new String[] {
-                    "Profile", "Filter", "QR Read",
-                    "My EcoCoins", "EcoExchange" };
-        }else{
-            opcoes = new String[] {"Login", "Filter"};
-        }
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description for accessibility */
+                R.string.drawer_close  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
 
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mList = (ListView) findViewById(R.id.left_pane);
-        mList.setAdapter(new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                opcoes));
-        mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mDrawerList.setAdapter(new ArrayAdapter<>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+
+        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener(){
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selecionaItem(position);
             }
         });
+
+        if (savedInstanceState == null){
+            selecionaItem(0);
+        }
     }
 
-    private void selecionaItem(int posicao){
-        Intent myIntent;
+
+
+    public void selecionaItem(int posicao){
+        //update no menu..
+        mDrawerList.setItemChecked(posicao, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+
+        //Fragmentos
+        Fragment fragment = new Fragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
         switch (posicao){
             case 0:
-                Log.i("Clicado"," 1");
-                if (((Main)getApplication()).isLogado()){
-                    myIntent = new Intent(getApplicationContext(), Perfil.class);
-                    startActivity(myIntent);
-                }else{
-                    myIntent = new Intent(getApplicationContext(), Login.class);
-                    startActivity(myIntent);
-                }
                 break;
             case 1:
-                Log.i("Clicado"," 2");
-                myIntent = new Intent(getApplicationContext(), Filter.class);
-                startActivity(myIntent);
+                fragment = new LoginFragment();
                 break;
             case 2:
-                Log.i("Clicado"," 3");
-                myIntent = new Intent(getApplicationContext(), LeitorQr.class);
-                startActivity(myIntent);
+                fragment = new FilterFragment();
                 break;
             case 3:
-                Log.i("Clicado"," 4");
+                fragment = new LeitorQrFragment();
                 break;
             case 4:
-                Log.i("Clicado"," 5");
+                Log.i("Clicado"," 4");
+                break;
+            case 5:
+                fragment = new MyEcoCoinsFragment();
+                break;
+            case 6:
+                fragment = new SimulationFragment();
                 break;
             default:
                 Log.i("Clicado","OOUTRA COISA");
                 break;
         }
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
-    // Evento de clique do botão
-    public void abrirMenu(View v){
-        // Se estive aberto, feche. Senão abra.
-        if (mSlidingLayout.isOpen()){
-            mSlidingLayout.closePane();
-        } else {
-            mSlidingLayout.openPane();
-        }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -142,59 +154,42 @@ public class Mapa extends ActionBarActivity implements SlidingPaneLayout.PanelSl
         getMenuInflater().inflate(R.menu.menu_mapa, menu);
         return true;
     }
-//
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        Log.i("Clickado ", "testando: " + id);
-        Intent myIntent;
-        switch (id){
-            case R.id.action_settings:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Click do menu
+        if(mDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+
+        switch (item.getItemId()){
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-//        Double latitude = -23.5838238;
-//        Double longetude = -46.6524742;
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame))
                     .getMap();
             mMap.setMyLocationEnabled(true);
-
-//            // Getting LocationManager object from System Service LOCATION_SERVICE
-//            LocationManager locationManager =
-//                    (LocationManager) getSystemService(LOCATION_SERVICE);
-//
-//            // Creating a criteria object to retrieve provider
-//            Criteria criteria = new Criteria();
-//
-//            // Getting the name of the best provider
-//            String provider = locationManager.getBestProvider(criteria, true);
-//
-//            // Getting Current Location
-//            Location location = locationManager.getLastKnownLocation(provider);
 
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
@@ -203,56 +198,53 @@ public class Mapa extends ActionBarActivity implements SlidingPaneLayout.PanelSl
         }
     }
 
-    @Override
-    public void onPanelSlide(View panel, float slideOffset) {
-
-    }
-
-    @Override
-    public void onPanelOpened(View panel) {
-
-    }
-
-    @Override
-    public void onPanelClosed(View panel) {
-
-    }
-
     class RecuperaPontos extends AsyncTask<Void, Void, ArrayList<Pontodetroca>>{
-
         @Override
         protected ArrayList<Pontodetroca> doInBackground(Void... params) {
-            String url = "http://ecociclews.mybluemix.net/api/pontodetroca/0";
-            //Log.i("URL", " " + url);
-            String[] resposta = new WebServiceCliente().get(url);
             ArrayList<Pontodetroca> pontos = null;
-            Log.i("resp "," >>" + resposta[0]);
-            if (resposta[0].equals("200")) {
-                Gson gson = new Gson();
-                Type collType = new TypeToken<ArrayList<Pontodetroca>>() {}.getType();
-                pontos = gson.fromJson(resposta[1], collType);
+            try{
+                String url = "http://ecociclews.mybluemix.net/api/point/0";
+                String[] resposta = new WebServiceCliente().get(url);
+                if (resposta[0].equals("200")) {
+                    Gson gson = new Gson();
+                    Type collType = new TypeToken<ArrayList<Pontodetroca>>() {}.getType();
+                    pontos = gson.fromJson(resposta[1], collType);
+                }else if (resposta[0].equals("404")){
+                    //Erro de servidor nao respondendo;
+                    Log.i("SAIU", " akii");
+                    super.onCancelled();
+                }
+            }catch (Exception e){
+                Log.i("Erro: ","" + e.getMessage());
             }
             return pontos;
         }
 
         @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
         protected void onPostExecute(ArrayList<Pontodetroca> pontos) {
-            for(Pontodetroca p : pontos){
-                MarkerOptions markerPoint = (new MarkerOptions()
-                        .position(new LatLng(p.getLatitude(), p.getLongitude()))
-                        .title(p.getDescricao()));
-                switch (p.getTipo()){
-                    case "0":
-                        markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconmapsmal));
-                        break;
-                    case "1":
-                        markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.icontroca));
-                        break;
-                    case "2":
-                        markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.icontwoitens));
-                        break;
+            if(pontos != null) {
+                for (Pontodetroca p : pontos) {
+                    MarkerOptions markerPoint = (new MarkerOptions()
+                            .position(new LatLng(p.getLatitude(), p.getLongitude()))
+                            .title(p.getDescricao()));
+                    switch (p.getTipo()) {
+                        case "0":
+                            markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconmapsmal));
+                            break;
+                        case "1":
+                            markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.icontroca));
+                            break;
+                        case "2":
+                            markerPoint.icon(BitmapDescriptorFactory.fromResource(R.drawable.icontwoitens));
+                            break;
+                    }
+                    mMap.addMarker(markerPoint);
                 }
-                mMap.addMarker(markerPoint);
             }
         }
     }

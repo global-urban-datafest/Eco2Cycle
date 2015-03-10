@@ -1,18 +1,26 @@
-<android.support.v4.widget.SlidingPaneLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sliding_pane_layout"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!--conteudo da pagina MAPA-->
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_frame"
+        tools:context="com.e2g.ecocicle.Mapa"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
     <!-- Menu Lateral -->
     <ListView
-        android:id="@+id/left_pane"
-        android:layout_width="280dp"
+        android:id="@+id/left_drawer"
+        android:layout_width="180dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left" />
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:id="@+id/map" tools:context="com.e2g.ecocicle.Mapa"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
-</android.support.v4.widget.SlidingPaneLayout>
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111"/>
+</android.support.v4.widget.DrawerLayout>

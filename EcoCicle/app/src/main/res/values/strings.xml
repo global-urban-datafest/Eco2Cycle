@@ -10,4 +10,21 @@
     <string name="title_activity_filter">Filter</string>
     <string name="title_activity_perfil">Profile</string>
     <string name="title_activity_leitor_qr">Qr Read</string>
+
+    <string-array name="options_array">
+        <item>Map</item>
+        <item>Profile</item>
+        <item>Filter</item>
+        <item>QR Read</item>
+        <item>My EcoCoins</item>
+        <item>EcoExchange</item>
+        <item>Simulation</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Search</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

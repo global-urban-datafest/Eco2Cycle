@@ -5,9 +5,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.e2g.ecocicle.Util.Main;
 
 
 public class Perfil extends ActionBarActivity {
+
+    private TextView textUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +21,12 @@ public class Perfil extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-    }
 
+        //Tela
+        textUsuario = (TextView) findViewById(R.id.txtUsuario);
+        textUsuario.setText(((Main)getApplication()).getUsuarioNaApp().getLogin());
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

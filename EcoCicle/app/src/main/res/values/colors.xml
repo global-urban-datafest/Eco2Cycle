@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backgroud_menu">#111</color>
+    <color name="backgroud">#eeeeee</color>
+    <color name="pre_gastronomia">#b1236f</color>
+    <color name="pre_esporte">#eb027f</color>
+    <color name="pre_exposicao">#e51e25</color>
+    <color name="pre_teatro">#f06522</color>
+    <color name="pre_cinema">#fff001</color>
+    <color name="pre_networking">#aace38</color>
+    <color name="pre_zen">#00ad4b</color>
+    <color name="pre_show">#00aea4</color>
+    <color name="pre_musica">#01b0e9</color>
+    <color name="pre_happyohur">#0171bb</color>
+    <color name="pre_hojetem">#4f3c95</color>
+    <color name="pre_napegada">#7b3993</color>
+    <color name="pre_desabilitado">#646464</color>
+    <color name="action">#00ad00</color>
+    <color name="fundo_branco">#ffffff</color>
+    <color name="fonte_evento">#686868</color>
+    <color name="borda_evento">#dadada</color>
+    <color name="borda_evento_fonte_compartilhar">#b0b0b0</color>
+    <color name="borda_evento_valor">#3b813b</color>
+    <color name="borda_evento_compartilhar">#969696</color>
+
+</resources>
