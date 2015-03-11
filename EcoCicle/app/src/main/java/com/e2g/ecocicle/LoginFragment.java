@@ -1,5 +1,6 @@
 package com.e2g.ecocicle;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +67,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 textLogin.getText().toString().equals("")){
             Toast.makeText(getActivity(), "Fill out all fields!", Toast.LENGTH_LONG).show();
         }else{
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                    Context.INPUT_METHOD_SERVICE
+            );
+            imm.hideSoftInputFromWindow(textSenha.getWindowToken(), 0);
             new RecuperaLogin(textSenha.getText().toString(),
                     textLogin.getText().toString()).execute();
         }
@@ -99,11 +105,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(getActivity(), "User or password is incorrect!", Toast.LENGTH_LONG).show();
             }else{
                 ((Main)getActivity().getApplication()).setUsuarioNaApp(client);
-//                Main m = new Main();
-//                m.setUsuarioNaApp(client);
-//                ((Main)getApplication()).setLogado(true);
-//                ((Main)getApplication()).setUsuarioNaApp(client);
-                Toast.makeText(getActivity(), "Welcome, " + client.getLogin() + "!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Welcome, " + client.getName() + "!", Toast.LENGTH_LONG).show();
+                ((Mapa)getActivity()).changeMenuLateral(client.getName());
                 fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             }
         }

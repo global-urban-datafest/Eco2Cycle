@@ -1,24 +1,38 @@
 package com.e2g.ecocicle.Model;
 
+import java.util.Collection;
+
 /**
  * Created by tigrao on 06/03/15.
  */
 public class Product {
-    private int idProduto;
+
+    private Long idProduto;
+
     private String material;
+
     private String product;
-    private Double price;
-    private Double ecocoin;
+
+    private Float price;
+
+    private Float ecocoin;
+
     private String unity;
+
+    private Collection<ProductPoint> productPointCollection;
 
     public Product() {
     }
 
-    public int getIdProduto() {
+    public Product(Long idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public Long getIdProduto() {
         return idProduto;
     }
 
-    public void setIdProduto(int idProduto) {
+    public void setIdProduto(Long idProduto) {
         this.idProduto = idProduto;
     }
 
@@ -38,19 +52,19 @@ public class Product {
         this.product = product;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public Double getEcocoin() {
+    public Float getEcocoin() {
         return ecocoin;
     }
 
-    public void setEcocoin(Double ecocoin) {
+    public void setEcocoin(Float ecocoin) {
         this.ecocoin = ecocoin;
     }
 
@@ -60,5 +74,13 @@ public class Product {
 
     public void setUnity(String unity) {
         this.unity = unity;
+    }
+
+    public Collection<ProductPoint> getProductPointCollection() {
+        return productPointCollection;
+    }
+
+    public void setProductPointCollection(Collection<ProductPoint> productPointCollection) {
+        this.productPointCollection = productPointCollection;
     }
 }

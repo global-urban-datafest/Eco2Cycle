@@ -1,15 +1,31 @@
 package com.e2g.ecocicle.Model;
 
+import java.util.Collection;
+
 /**
  * Created by tigrao on 06/03/15.
  */
 public class Client {
-    private int idCliente;
-    private String rg;
-    private String cpf;
-    private String login;
-    private String pass;
+
+    private Long idCliente;
+
+    private String name;
+
     private String adress;
+
+    private String rg;
+
+    private String cpf;
+
+    private String login;
+
+    private String pass;
+
+    private String email;
+
+    private String ativo;
+
+    private Collection<Operation> operationCollection;
 
     public Client() {
     }
@@ -19,12 +35,32 @@ public class Client {
         this.login = login;
     }
 
-    public int getIdCliente() {
+    public Client(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Long getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Long idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getRg() {
@@ -43,6 +79,14 @@ public class Client {
         this.cpf = cpf;
     }
 
+    public Collection<Operation> getOperationCollection() {
+        return operationCollection;
+    }
+
+    public void setOperationCollection(Collection<Operation> operationCollection) {
+        this.operationCollection = operationCollection;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -59,11 +103,19 @@ public class Client {
         this.pass = pass;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(String ativo) {
+        this.ativo = ativo;
     }
 }

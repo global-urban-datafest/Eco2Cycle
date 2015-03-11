@@ -11,6 +11,13 @@
     <string name="title_activity_perfil">Profile</string>
     <string name="title_activity_leitor_qr">Qr Read</string>
 
+    <string-array name="options_array_no_user">
+        <item>Map</item>
+        <item>Login</item>
+        <item>Filter</item>
+        <item>Simulation</item>
+    </string-array>
+
     <string-array name="options_array">
         <item>Map</item>
         <item>Profile</item>

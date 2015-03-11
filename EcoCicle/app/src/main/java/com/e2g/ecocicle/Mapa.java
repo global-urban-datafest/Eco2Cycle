@@ -1,7 +1,8 @@
 package com.e2g.ecocicle;
 
 //import android.app.FragmentManager;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -16,13 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.e2g.ecocicle.Model.Pontodetroca;
+import com.e2g.ecocicle.Model.PontoTroca;
+import com.e2g.ecocicle.Model.ProductPoint;
 import com.e2g.ecocicle.Util.Main;
 import com.e2g.ecocicle.WebService.WebServiceCliente;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,7 +60,13 @@ public class Mapa extends ActionBarActivity{
         getSupportActionBar().setTitle("Eco 2 Cycle");
 
         //MENU LATERAL
-        mPlanetTitles = getResources().getStringArray(R.array.options_array);
+        if (logado()){
+            mPlanetTitles = getResources().getStringArray(R.array.options_array);
+            mPlanetTitles[1] = ((Main)getApplication()).getUsuarioNaApp().getName().toString();
+        }else{
+            mPlanetTitles = getResources().getStringArray(R.array.options_array_no_user);
+        }
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
@@ -97,7 +106,25 @@ public class Mapa extends ActionBarActivity{
         }
     }
 
+    public void changeMenuLateral(String name){
+        //MENU LATERAL
+        if (logado()){
+            mPlanetTitles = getResources().getStringArray(R.array.options_array);
+        }else{
+            mPlanetTitles = getResources().getStringArray(R.array.options_array_no_user);
+        }
+        mPlanetTitles[1] = name;
+        mDrawerList.setAdapter(new ArrayAdapter<>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
 
+        mDrawerList.setOnItemClickListener(new ListView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selecionaItem(position);
+            }
+        });
+    }
 
     public void selecionaItem(int posicao){
         //update no menu..
@@ -107,35 +134,78 @@ public class Mapa extends ActionBarActivity{
         //Fragmentos
         Fragment fragment = new Fragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-        switch (posicao){
-            case 0:
+        String s;
+        if(!logado()){
+            s = getResources().getStringArray(R.array.options_array_no_user)[posicao];
+        }else{
+            s = getResources().getStringArray(R.array.options_array)[posicao];
+        }
+        switch (s){
+            case "Map":
                 break;
-            case 1:
-                fragment = new LoginFragment();
+            case "Login":
+                if (logado()){
+                    fragment = new PerfilFragment();
+                }else{
+                    fragment = new LoginFragment();
+                }
                 break;
-            case 2:
+            case "Filter":
                 fragment = new FilterFragment();
                 break;
-            case 3:
-                fragment = new LeitorQrFragment();
+            case "QR Read":
+                if (logado()){
+                    fragment = new LeitorQrFragment();
+                }else{
+                    exibeAlerta();
+                }
                 break;
-            case 4:
-                Log.i("Clicado"," 4");
+            case "My EcoCoins":
+                if(logado()){
+                    Log.i("Clicado"," 4");
+                }else{
+                    exibeAlerta();
+                }
                 break;
-            case 5:
-                fragment = new MyEcoCoinsFragment();
+            case "EcoExchange":
+                if (logado()){
+                    fragment = new MyEcoCoinsFragment();
+                }else{
+                    exibeAlerta();
+                }
                 break;
-            case 6:
+            case "Simulation":
                 fragment = new SimulationFragment();
                 break;
             default:
-                Log.i("Clicado","OOUTRA COISA");
+                if (logado()){
+                    fragment = new PerfilFragment();
+                }
                 break;
         }
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
+    private boolean logado(){
+        if (((Main)getApplication()).getUsuarioNaApp() != null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private void exibeAlerta(){
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("LOGIN!");
+        alerta.setMessage("PRIMEIRO O LOGIN!");
+        alerta.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alerta.show();
+    }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
@@ -177,8 +247,8 @@ public class Mapa extends ActionBarActivity{
         }
 
         switch (item.getItemId()){
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -198,16 +268,16 @@ public class Mapa extends ActionBarActivity{
         }
     }
 
-    class RecuperaPontos extends AsyncTask<Void, Void, ArrayList<Pontodetroca>>{
+    class RecuperaPontos extends AsyncTask<Void, Void, ArrayList<PontoTroca>>{
         @Override
-        protected ArrayList<Pontodetroca> doInBackground(Void... params) {
-            ArrayList<Pontodetroca> pontos = null;
+        protected ArrayList<PontoTroca> doInBackground(Void... params) {
+            ArrayList<PontoTroca> pontos = null;
             try{
                 String url = "http://ecociclews.mybluemix.net/api/point/0";
                 String[] resposta = new WebServiceCliente().get(url);
                 if (resposta[0].equals("200")) {
                     Gson gson = new Gson();
-                    Type collType = new TypeToken<ArrayList<Pontodetroca>>() {}.getType();
+                    Type collType = new TypeToken<ArrayList<PontoTroca>>() {}.getType();
                     pontos = gson.fromJson(resposta[1], collType);
                 }else if (resposta[0].equals("404")){
                     //Erro de servidor nao respondendo;
@@ -226,9 +296,9 @@ public class Mapa extends ActionBarActivity{
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Pontodetroca> pontos) {
+        protected void onPostExecute(ArrayList<PontoTroca> pontos) {
             if(pontos != null) {
-                for (Pontodetroca p : pontos) {
+                for (PontoTroca p : pontos) {
                     MarkerOptions markerPoint = (new MarkerOptions()
                             .position(new LatLng(p.getLatitude(), p.getLongitude()))
                             .title(p.getDescricao()));

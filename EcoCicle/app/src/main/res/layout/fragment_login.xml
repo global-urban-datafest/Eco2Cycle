@@ -30,7 +30,8 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/fragEditLogin" />
+                android:id="@+id/fragEditLogin"
+                android:inputType="textNoSuggestions"/>
         </LinearLayout>
 
         <LinearLayout
