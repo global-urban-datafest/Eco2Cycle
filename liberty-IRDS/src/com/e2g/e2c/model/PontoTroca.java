@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
    @NamedQuery(name = "PontoTroca.findByResponsavel", query = "SELECT p FROM PontoTroca p WHERE p.responsavel = :responsavel"),
    @NamedQuery(name = "PontoTroca.findByEndereco", query = "SELECT p FROM PontoTroca p WHERE p.endereco = :endereco"),
    @NamedQuery(name = "PontoTroca.findByLatitude", query = "SELECT p FROM PontoTroca p WHERE p.latitude = :latitude"),
+   @NamedQuery(name = "PontoTroca.findByLogin", query = "SELECT p FROM PontoTroca p WHERE p.login = :login"),
    @NamedQuery(name = "PontoTroca.findByLongitude", query = "SELECT p FROM PontoTroca p WHERE p.longitude = :longitude")})
 public class PontoTroca implements Serializable {
    private static final long serialVersionUID = 1L;
@@ -59,6 +60,14 @@ public class PontoTroca implements Serializable {
    private String password;
    @Column(name = "tipo")
    private String tipo;
+   @Column(name = "ativo")
+   private String ativo;
+   @Column(name = "phone")
+   private String phone;
+   
+   
+   
+   
    
    
    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pontoTrocaidPontoColeta")
@@ -154,6 +163,24 @@ public void setTipo(String tipo) {
 	this.tipo = tipo;
 }
 
+
+
+public String getAtivo() {
+	return ativo;
+}
+
+public void setAtivo(String ativo) {
+	this.ativo = ativo;
+}
+
+public String getPhone() {
+	return phone;
+}
+
+public void setPhone(String phone) {
+	this.phone = phone;
+}
+
 @Override
    public int hashCode() {
        int hash = 0;
@@ -183,15 +210,23 @@ public void setTipo(String tipo) {
     		                "\"descricao\": \"%s\"," +
     		                "\"responsavel\": \"%s\"," +
     		                "\"endereco\": \"%s\"," +
+    		                "\"login\": \"%s\"," +
+    		                "\"password\": \"%s\"," +
     		                "\"tipo\": \"%s\"," +
+    		                "\"phone\": \"%s\"," +
+    		                "\"ativo\": \"%s\"," +
     		                "\"latitude\": \"%f\"," +
     		                "\"longitude\": \"%f\"" +
     		                "}",
        		                idPontoColeta!=null?idPontoColeta:null, 
-	                		descricao!=null?descricao:null,
-            				responsavel!=null?responsavel:null,
-    						endereco!=null?endereco:null,
-							tipo!=null?tipo:null,
+	                		descricao!=null?descricao:"null",
+            				responsavel!=null?responsavel:"null",
+    						endereco!=null?endereco:"null",
+							login!=null?login:"null",
+							password!=null?password:"null",
+							tipo!=null?tipo:"null",
+							phone!=null?phone:"null",
+							ativo!=null?ativo:"null",
 							latitude!=null?latitude:null,
 							longitude!=null?longitude:null);
 	   

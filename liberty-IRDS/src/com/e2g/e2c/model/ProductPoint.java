@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
    @NamedQuery(name = "ProductPoint.findAll", query = "SELECT p FROM ProductPoint p"),
    @NamedQuery(name = "ProductPoint.findByIdProdutoPonto", query = "SELECT p FROM ProductPoint p WHERE p.idProdutoPonto = :idProdutoPonto"),
    @NamedQuery(name = "ProductPoint.findByPrice", query = "SELECT p FROM ProductPoint p WHERE p.price = :price"),
+   @NamedQuery(name = "ProductPoint.findByPoint", query = "SELECT p FROM ProductPoint p WHERE p.pontoTrocaidPontoColeta.idPontoColeta = :idPonto"),
    @NamedQuery(name = "ProductPoint.findByEcocoin", query = "SELECT p FROM ProductPoint p WHERE p.ecocoin = :ecocoin")})
 public class ProductPoint implements Serializable {
    private static final long serialVersionUID = 1L;

@@ -1,6 +1,9 @@
 package com.e2g.e2c.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "Operation.findAll", query = "SELECT o FROM Operation o"),
    @NamedQuery(name = "Operation.findByIdOperacao", query = "SELECT o FROM Operation o WHERE o.idOperacao = :idOperacao"),
    @NamedQuery(name = "Operation.findByPrice", query = "SELECT o FROM Operation o WHERE o.price = :price"),
+   @NamedQuery(name = "Operation.findByClient", query = "SELECT o FROM Operation o WHERE o.clientidCliente = :idCliente"),
    @NamedQuery(name = "Operation.findByEcoCoin", query = "SELECT o FROM Operation o WHERE o.ecoCoin = :ecoCoin")})
 public class Operation implements Serializable {
    private static final long serialVersionUID = 1L;
@@ -38,6 +42,10 @@ public class Operation implements Serializable {
    private Float price;
    @Column(name = "ecoCoin")
    private Float ecoCoin;
+   
+   @Column(name = "time")
+   private Date time;
+   
    @JoinColumn(name = "ProductPoint_idProdutoPonto", referencedColumnName = "idProdutoPonto")
    @ManyToOne(optional = false)
    private ProductPoint productPointidProdutoPonto;
@@ -45,6 +53,7 @@ public class Operation implements Serializable {
    @ManyToOne(optional = false)
    private Client clientidCliente;
 
+   
    public Operation() {
    }
 
@@ -92,7 +101,15 @@ public class Operation implements Serializable {
        this.clientidCliente = clientidCliente;
    }
 
-   @Override
+   public Date getTime() {
+	return time;
+}
+
+public void setTime(Date time) {
+	this.time = time;
+}
+
+@Override
    public int hashCode() {
        int hash = 0;
        hash += (idOperacao != null ? idOperacao.hashCode() : 0);
@@ -127,5 +144,24 @@ public class Operation implements Serializable {
 			this.clientidCliente!=null?clientidCliente.getIdCliente():null);
    }
    
+   
+   public String toStatment() {
+	   SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	   return String.format("{\"idOperacao\": \"%d\"," +
+           "\"point\": \"%s\"," +
+           "\"material\": \"%s\"," +
+           "\"product\": \"%s\"," +
+           "\"price\": \"%.2f\"," +
+           "\"ecocoin\": \"%.2f\"," +
+           "\"date\": \"%s\"" +
+           "}",
+            this.idOperacao!=null?idOperacao:null, 
+    		this.productPointidProdutoPonto!=null?productPointidProdutoPonto.getPontoTrocaidPontoColeta().getDescricao():null,
+			this.productPointidProdutoPonto!=null?productPointidProdutoPonto.getProductidProduto().getMaterial():null,
+			this.productPointidProdutoPonto!=null?productPointidProdutoPonto.getProductidProduto().getProduct():null,
+			this.price!=null?price:null,
+			this.ecoCoin!=null?ecoCoin:null,
+			this.time!=null?sdf.format(time):null);
+   }
 }
 

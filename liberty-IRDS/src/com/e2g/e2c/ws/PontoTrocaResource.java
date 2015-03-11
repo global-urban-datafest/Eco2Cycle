@@ -14,12 +14,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+import com.e2g.e2c.model.Client;
 import com.e2g.e2c.model.PontoTroca;
 
 
 
-@Path("/pontodetroca")
+@Path("/point")
 public class PontoTrocaResource {
 
 	private UserTransaction utx;
@@ -91,4 +91,23 @@ public class PontoTrocaResource {
 		}
 		return Response.ok(json).build();
 	}
+	
+	@POST
+	@Path("/login")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response login(PontoTroca point){
+		String jsonString =new Client().toString();
+		try{
+			PontoTroca p = em.createNamedQuery("PontoTroca.findByLogin",PontoTroca.class).setParameter("login", point.getLogin()).getSingleResult();
+			if(p.getPassword().equals(p.getPassword())){
+				jsonString = p.toString();
+			}
+		}catch (Exception e) {
+			return Response.status(401).build();
+		}
+		
+		return Response.ok(jsonString).build();
+	}
+	
+	
 }

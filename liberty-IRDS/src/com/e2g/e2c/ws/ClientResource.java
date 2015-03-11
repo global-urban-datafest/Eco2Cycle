@@ -1,5 +1,6 @@
 package com.e2g.e2c.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.e2g.e2c.model.Client;
+import com.e2g.e2c.model.Operation;
 
 @Path("/client")
 public class ClientResource {
@@ -57,6 +59,8 @@ public class ClientResource {
 		try {
 			utx.begin();
 			if(ent.getIdCliente()==0){
+				//verificar se o login já existe
+				//Client c = em.createNamedQuery("Client.findByLogin",Client.class).setParameter("login", ent.getLogin()).getSingleResult();
 				ent.setIdCliente(null);
 				em.persist(ent);
 			}else{
@@ -105,6 +109,59 @@ public class ClientResource {
 		}
 		
 		return Response.ok(jsonString).build();
+	}
+	
+	@GET
+	@Path("/coins/{idClient}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCoins(@PathParam("idClient") Long id){
+		Client ent = new Client((long)0);
+		String json = ent.toString();
+		Float coins = Float.valueOf(0);
+		Float gasto = Float.valueOf(0);
+		
+		try{
+			ent = (Client) em.createNamedQuery("Client.findByIdCliente").setParameter("idCliente", id).getSingleResult();
+			List<Operation> ents = (List<Operation>) em.createNamedQuery("Operation.findByClient",Operation.class).setParameter("idCliente", ent).getResultList();
+			json = ents.toString();
+			for (Operation operation : ents) {
+				if(operation.getPrice()!=null){
+					coins = coins+operation.getEcoCoin();
+				}else{
+					gasto = gasto+operation.getEcoCoin();
+				}
+			}
+			
+		}catch (Exception e) {
+			 coins = Float.valueOf(0);
+			 gasto = Float.valueOf(0);
+		}
+		json =String.format("{\"coins\":\"%.2f\", \"xp\":\"%.2f\"}", coins,gasto);
+		return Response.ok(json).build();
+	}
+	@GET
+	@Path("/operations/{idClient}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getOperation(@PathParam("idClient") Long id){
+		Client ent = new Client((long)0);
+		String json = ent.toString();
+		List<Operation> ents = new ArrayList<Operation>();
+		StringBuilder sb = new StringBuilder("[");
+		try{
+			ent = (Client) em.createNamedQuery("Client.findByIdCliente").setParameter("idCliente", id).getSingleResult();
+			ents = (List<Operation>) em.createNamedQuery("Operation.findByClient",Operation.class).setParameter("idCliente", ent).getResultList();
+			for (Operation operation : ents) {
+				sb.append(operation.toStatment());
+				sb.append(",");
+			}
+			sb.deleteCharAt(sb.length()-1);
+			sb.append("]");
+			
+		}catch (Exception e) {
+			 json = "[ ]";
+			 return Response.ok(json).build();
+		}
+		return Response.ok(sb.toString()).build();
 	}
 	
 	

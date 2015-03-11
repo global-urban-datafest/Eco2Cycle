@@ -1,5 +1,6 @@
 package com.e2g.e2c.ws;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -58,17 +59,19 @@ public class OperacaoResourse {
 			utx.begin();
 			if(ent.getIdOperacao()==0){
 				ent.setIdOperacao(null);
+				ent.setTime(Calendar.getInstance().getTime());
 				em.persist(ent);
 			}else{
 				em.merge(ent);
 			}
 			utx.commit();
-			return Response.ok().build();
+			return Response.ok(ent.toString()).build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			return Response.ok(ent.toString()).build();
 		}
 	}
+	
 	
 	
 	@GET

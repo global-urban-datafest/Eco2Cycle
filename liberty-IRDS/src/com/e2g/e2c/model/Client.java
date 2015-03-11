@@ -45,6 +45,15 @@ public class Client implements Serializable {
     @Column(name = "pass")
     private String pass;
     
+    @Column(name = "email")
+    private String email;
+    @Column(name = "ativo")
+    private String ativo;
+    
+    
+    
+    
+    
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientidCliente")
     private Collection<Operation> operationCollection;
@@ -120,6 +129,26 @@ public class Client implements Serializable {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
+	
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
 
 	@Override
     public int hashCode() {
@@ -144,18 +173,32 @@ public class Client implements Serializable {
     @Override
     public String toString() {
     	return String.format("{\"idCliente\": \"%d\"," +
+    			"\"name\":\"%s\","+
 	            "\"rg\": \"%s\"," +
 	            "\"cpf\": \"%s\"," +
 	            "\"login\": \"%s\"," +
 	            "\"pass\": \"%s\"," +
+	            "\"email\": \"%s\"," +
+	            "\"ativo\":\"%s\","+
 	            "\"adress\": \"%s\"" +
             "}",
-            this.idCliente!=null?idCliente:0, 
+            this.idCliente!=null?idCliente:0,
+    		this.name!=null?name:"null",
     		this.rg!=null?rg:"null",
 			this.cpf!=null?cpf:"null",
 			this.login!=null?login:"null",
 			this.pass!=null?pass:"null",
+			this.email!=null?email:"null",
+			this.ativo!=null?ativo:"null",
 			this.adress!=null?adress:"null");
     }
+//    
+//    public String recycledata name() {
+//		
+//	}
     
 }
+
+
+
+

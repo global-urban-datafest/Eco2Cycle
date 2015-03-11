@@ -1,0 +1,109 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400);
+
+.arc1 {
+    width: 160px;
+    height: 160px;
+    background: #00a0db;
+    -webkit-transform-origin: -31% 61%;
+    margin-left: -30px;
+    margin-top: 20px;
+    -webkit-transform: translate(-54px,50px);
+    -moz-transform: translate(-54px,50px);
+    -o-transform: translate(-54px,50px);
+}
+.arc2 {
+    width: 160px;
+    height: 160px;
+    background: #00a0db;
+    -webkit-transform: skew(45deg,0deg);
+    -moz-transform: skew(45deg,0deg);
+    -o-transform: skew(45deg,0deg);
+    margin-left: -180px;
+    margin-top: -90px;
+    position: absolute;
+    -webkit-transition: all .5s linear;
+    -moz-transition: all .5s linear;
+    -o-transition: all .5s linear;
+}
+
+.arc-container:hover .arc2 {
+    margin-left: -50px;
+    -webkit-transform: skew(-20deg,0deg);
+    -moz-transform: skew(-20deg,0deg);
+    -o-transform: skew(-20deg,0deg);
+}
+
+.arc-wrapper {
+    width: 150px;
+    height: 150px;
+    border-radius:150px;
+    background: #424242;
+    overflow:hidden;
+    left: 50px;
+    top: 50px;
+    position: absolute;
+}
+.arc-hider {
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    border: 50px solid #e9e9e9;
+    position:absolute;
+    z-index:5;
+    box-shadow:inset 0px 0px 20px rgba(0,0,0,0.7);
+}
+
+.arc-inset  {
+    font-family: "Josefin Sans";
+    font-weight: 100;
+    position: absolute;
+    font-size: 413px;
+    margin-top: -64px;
+    z-index: 5;
+    left: 30px;
+    line-height: 327px;
+    height: 280px;
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,1), rgba(0,0,0,0.2));
+}
+.arc-lowerInset {
+    font-family: "Josefin Sans";
+    font-weight: 100;
+    position: absolute;
+    font-size: 413px;
+    margin-top: -64px;
+    z-index: 5;
+    left: 30px;
+    line-height: 327px;
+    height: 280px;
+    color: white;
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,0.2), rgba(0,0,0,1));
+}
+.arc-overlay {
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(bottom, rgb(217,217,217) 10%, rgb(245,245,245) 90%, rgb(253,253,253) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(217,217,217) 10%, rgb(245,245,245) 90%, rgb(253,253,253) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(217,217,217) 10%, rgb(245,245,245) 90%, rgb(253,253,253) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(217,217,217) 10%, rgb(245,245,245) 90%, rgb(253,253,253) 100%);
+
+    padding-left: 32px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    line-height: 100px;
+    font-family: sans-serif;
+    font-weight: 400;
+    text-shadow: 0 1px 0 #fff;
+    font-size: 22px;
+    border-radius: 100px;
+    position: absolute;
+    z-index: 5;
+    top: 75px;
+    left: 75px;
+    box-shadow:0px 0px 20px rgba(0,0,0,0.7);
+}
+.arc-container {
+    position: relative;
+    background: #e9e9e9;
+    height: 250px;
+    width: 250px;
+}

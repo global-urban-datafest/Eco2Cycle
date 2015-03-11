@@ -4,3 +4,6 @@
 	bare = true
 	ignorecase = true
 	precomposeunicode = true
+[remote "origin"]
+	url = https://guardezi@bitbucket.org/e2gibm/ecocicle-webservice.git
+	fetch = +refs/heads/*:refs/remotes/origin/*

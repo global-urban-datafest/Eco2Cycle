@@ -39,6 +39,7 @@ public class ProductPointResource {
 		return null;
 	}
 	
+	
 
 	private EntityManager getEm() {
 		InitialContext ic;
@@ -87,8 +88,11 @@ public class ProductPointResource {
 		}catch (Exception er) {
 			json= ent.toString();
 		}
+		
 		return Response.ok(json).build();
 	}
+	
+	
 	
 	@GET
 	@Path("/produtosponto/{idponto}")
@@ -101,9 +105,10 @@ public class ProductPointResource {
 				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findAll",ProductPoint.class).getResultList();
 				json = ents.toString();
 			}else{
-				ent = (ProductPoint) em.createNamedQuery("ProductPoint.findByIdProdutoPonto").setParameter("idProdutoPonto", id).getSingleResult();
-				json = ent.toString();
+				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findByPoint",ProductPoint.class).setParameter("idPonto", id).getResultList();
+				json = ents.toString();
 			}
+			
 		}catch (Exception er) {
 			json= ent.toString();
 		}
@@ -111,4 +116,5 @@ public class ProductPointResource {
 	}
 	
 	
+		
 }
