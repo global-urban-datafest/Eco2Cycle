@@ -2,6 +2,13 @@
 <resources>
     <color name="backgroud_menu">#111</color>
     <color name="backgroud">#eeeeee</color>
+    <!--<color name="backgroudAPP">#7bb544</color>
+    <color name="backgroudAPP">#4caf50</color>-->
+    <color name="backgroudAPP">#8fc154</color>
+    <color name="debito">#e51e25</color>
+    <color name="credito">#8fc154</color>
+    <color name="backgroudFace">#dadde4</color>
+    <color name="backgroudAPPDOIS">#727272</color>
     <color name="pre_gastronomia">#b1236f</color>
     <color name="pre_esporte">#eb027f</color>
     <color name="pre_exposicao">#e51e25</color>

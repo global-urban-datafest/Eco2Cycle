@@ -4,27 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e2g.ecocicle.LoginFragment"
-    android:background="#ffffffff">
+    android:background="#ffffffff"
+    android:padding="15pt">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:padding="2pt">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="95dp"
+        android:background="@drawable/background_evento">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView3"
+            android:src="@drawable/empresa" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/background_evento"
+        android:layout_marginTop="5pt"
+        android:padding="3pt">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:padding="3pt">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Login:"
+                android:text="E-Mail:"
                 android:id="@+id/textView2" />
 
             <EditText
@@ -37,7 +60,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="3pt">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,41 +79,39 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="10pt">
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Login"
-                android:id="@+id/frag_btn_entrar"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+                android:id="@+id/frag_btn_entrar"
+                android:background="@drawable/default_button_selector"
+                android:textColor="#ffffffff" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Cancel"
-                android:id="@+id/btn_cancelar"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+                android:id="@+id/btn_cancelar"
+                android:background="@drawable/default_button_selector"
+                android:textColor="#ffffffff"
+                android:layout_marginTop="5pt"/>
 
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"
-                android:id="@+id/btn_cadastra" />
+                android:id="@+id/btn_cadastra"
+                android:background="@drawable/default_button_selector"
+                android:textColor="#ffffffff"
+                android:layout_marginTop="5pt"/>
         </LinearLayout>
 
+    </LinearLayout>
     </LinearLayout>
 </FrameLayout>

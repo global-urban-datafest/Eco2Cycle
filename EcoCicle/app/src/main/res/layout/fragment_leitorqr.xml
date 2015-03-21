@@ -4,14 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e2g.ecocicle.LeitorQrFragment"
-    android:background="#ffffffff">
+    android:background="#ffffff"
+    android:padding="10pt">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="2pt">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="110dp"
+            android:background="@drawable/background_evento">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView3"
+                android:src="@drawable/logo_qr" />
+        </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="@drawable/background_evento"
+        android:padding="5pt"
+        android:layout_marginTop="5pt">
 
         <Button
             android:layout_width="fill_parent"
@@ -20,7 +42,43 @@
             android:id="@+id/btnReadQr"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:background="@drawable/default_button_selector" />
+
+        <!--<LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/lineardecription"
+            android:visibility="invisible" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Description"
+                android:id="@+id/textView5"
+                android:layout_weight="0.03"
+                android:gravity="center_vertical|center_horizontal" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/txtDescritpiton"
+                android:gravity="clip_vertical|center_horizontal" />
+        </LinearLayout> -->
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:id="@+id/linear_informacoes"
+            android:background="@drawable/background_evento"
+            android:padding="5pt"
+            android:layout_marginTop="5pt"
+            android:visibility="invisible">
 
         <LinearLayout
             android:orientation="vertical"
@@ -33,7 +91,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Eco Coins:"
+                android:text="Eco$Coins: "
                 android:id="@+id/textView6"
                 android:layout_weight="0.03"
                 android:gravity="center_vertical|center_horizontal" />
@@ -57,7 +115,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Price:"
+                android:text="Money $: "
                 android:id="@+id/textView14"
                 android:layout_weight="0.03"
                 android:gravity="center_vertical|center_horizontal" />
@@ -69,13 +127,17 @@
                 android:id="@+id/txtPriceTot"
                 android:gravity="clip_vertical|center_horizontal" />
         </LinearLayout>
+        </LinearLayout>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Validar"
+            android:text="Get our Coins"
             android:id="@+id/btnValidar"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:background="@drawable/default_button_selector"
+            android:layout_marginTop="5pt"/>
 
+    </LinearLayout>
     </LinearLayout>
 </FrameLayout>

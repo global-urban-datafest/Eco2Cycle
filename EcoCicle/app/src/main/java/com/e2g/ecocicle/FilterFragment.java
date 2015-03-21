@@ -1,5 +1,6 @@
 package com.e2g.ecocicle;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -7,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,8 @@ public class FilterFragment extends Fragment{
     ListView lista;
     FilterAdpter filterAdpter;
 
+    private ProgressDialog progressDialog;
+
     public FilterFragment() {
     }
 
@@ -38,6 +43,29 @@ public class FilterFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_filter, container, false);
+        rootView.setFocusableInTouchMode(true);
+        rootView.requestFocus();
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    ((Mapa)getActivity()).changeMenuLateral("");
+                    return true;
+                }else if(keyCode == KeyEvent.KEYCODE_MENU){
+                    ((Mapa)getActivity()).abreFechaMenu();
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
+        /*
+        Iniciando o Dialog de espera...
+         */
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading list of products!");
+        progressDialog.show();
 
         new RecuperaProduct().execute();
         return rootView;
@@ -46,7 +74,7 @@ public class FilterFragment extends Fragment{
     class RecuperaProduct extends AsyncTask<Void, Void, ArrayList<Product>> {
         @Override
         protected ArrayList<Product> doInBackground(Void... params) {
-            String url = "http://ecociclews.mybluemix.net/api/product/0";
+            String url = "http://ecocicle.mybluemix.net/api/product/torecycle/0";
             //Log.i("URL", " " + url);
             String[] resposta = new WebServiceCliente().get(url);
             ArrayList<Product> products = null;
@@ -64,7 +92,8 @@ public class FilterFragment extends Fragment{
                 lista = (ListView) rootView.findViewById(R.id.listaFilters);
                 filterAdpter = new FilterAdpter(getActivity(), produtos);
                 lista.setAdapter(filterAdpter);
-                Log.i("FUNFO", "Funcionou..");
+                //Log.i("FUNFO", "Funcionou..");
+                progressDialog.dismiss();
             }catch (Exception e){
                 Log.i("ERRO TRAT", ">> " + e.getMessage());
             }
@@ -110,9 +139,14 @@ public class FilterFragment extends Fragment{
             descricao.setTextColor(Color.parseColor("#030000"));
             descricao.setText(produtos.get(position).getMaterial());
             TextView val = (TextView) layout.findViewById(R.id.itemValor);
-            val.setText("R$ " + produtos.get(position).getPrice().toString().replace(".", ",") + "    ");
+            DecimalFormat formatter = new DecimalFormat("0.00");
+
+            val.setText(formatter.format(produtos.get(position).getPrice()) + "    ");
+            //val.setText("R$ " + produtos.get(position).getPrice().toString().replace(".", ",") + "    ");
+
             TextView eco = (TextView) layout.findViewById(R.id.textEcoCoin);
-            eco.setText("Ecc " + produtos.get(position).getEcocoin().toString().replace(".", ","));
+            eco.setText(formatter.format(produtos.get(position).getEcocoin()));
+            //eco.setText("Ecc " + produtos.get(position).getEcocoin().toString().replace(".", ","));
             return layout;
         }
     }

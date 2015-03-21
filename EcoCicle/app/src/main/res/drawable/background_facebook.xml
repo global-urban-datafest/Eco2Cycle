@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Cor do Fundo!-->
+    <solid android:color="@color/fundo_branco" />
+
+    <!-- Cantos-->
+    <corners android:radius="1pt" />
+
+    <!-- Borda do componente-->
+    <stroke
+        android:color="@color/borda_evento"
+        android:width="1dip" />
+</shape>

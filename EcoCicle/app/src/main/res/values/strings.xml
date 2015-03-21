@@ -24,8 +24,9 @@
         <item>Filter</item>
         <item>QR Read</item>
         <item>My EcoCoins</item>
-        <item>EcoExchange</item>
+        <item>EcoCoins Store</item>
         <item>Simulation</item>
+        <item>Logout</item>
     </string-array>
 
     <string name="drawer_open">Open navigation drawer</string>

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e2g.ecocicle.SimulationFragment"
-    android:background="#ffffffff">
+    android:background="@color/backgroudAPP"
+    android:padding="5pt">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,27 +13,44 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="5pt">
+        android:padding="3pt"
+        android:background="@drawable/background_evento">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/background_evento">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView3"
+                android:src="@drawable/empresa" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="3pt">
+            android:padding="3pt"
+            android:layout_marginTop="5pt">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Type of element:"
-                android:id="@+id/textView9" />
+                android:text="Element: "
+                android:id="@+id/textView9"
+                android:gravity="right" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="select"
+                android:text="Select"
                 android:id="@+id/btnTypeElement"
-                android:onClick="" />
+                android:onClick=""
+                android:background="@drawable/default_button_selector" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,85 +62,99 @@
             android:id="@+id/typeElementTwo">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Material"
-                android:id="@+id/textView10" />
+                android:text="Material: "
+                android:id="@+id/textView10"
+                android:gravity="right" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="select"
+                android:text="Select"
                 android:id="@+id/btnTypeMat"
-                android:onClick="" />
+                android:onClick=""
+                android:background="@drawable/default_button_selector" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="3pt"
+            android:background="@drawable/background_evento"
             android:visibility="invisible"
-            android:id="@+id/sim_lin_price">
+            android:id="@+id/sim_lin_tot_inf">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Price: $"
-                android:id="@+id/textView11" />
+                android:padding="3pt"
+                android:visibility="invisible"
+                android:id="@+id/sim_lin_price">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Price: $ "
+                    android:id="@+id/textView11"
+                    android:gravity="right" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/txtPrice" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/txtPrice" />
+                android:padding="3pt"
+                android:visibility="invisible"
+                android:id="@+id/sim_lin_ecocoins">
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Eco-Coins: "
+                    android:id="@+id/textView13"
+                    android:gravity="right" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="3pt"
-            android:visibility="invisible"
-            android:id="@+id/sim_lin_ecocoins">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/txtEco" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Eco-Coins:"
-                android:id="@+id/textView13" />
+                android:padding="3pt"
+                android:visibility="invisible"
+                android:id="@+id/sim_lin_unity">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/txtEco" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Unity: "
+                    android:id="@+id/textView15"
+                    android:gravity="right" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="3pt"
-            android:visibility="invisible"
-            android:id="@+id/sim_lin_unity">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Unity:"
-                android:id="@+id/textView15" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/txtUnity" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/txtUnity" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -137,15 +169,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Quantidade:"
+                android:text="Amount:"
                 android:id="@+id/textView17" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:ems="10"
-                android:id="@+id/editQuantidade" />
+                android:id="@+id/editQuantidade"
+                android:hint="70.00"/>
 
         </LinearLayout>
         <LinearLayout
@@ -160,7 +192,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Calculate"
-                android:id="@+id/btnCalculate"/>
+                android:id="@+id/btnCalculate"
+                android:background="@drawable/default_button_selector" />
 
         </LinearLayout>
 
@@ -183,7 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Tot $:"
+                    android:text="Tot: $ "
                     android:id="@+id/textView12" />
 
                 <TextView
@@ -203,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Tot Eco:"
+                    android:text="Tot Eco: "
                     android:id="@+id/textView16" />
 
                 <TextView

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e2g.ecocicle.PerfilFragment"
-    android:background="#ffffffff">
+    android:background="@color/backgroudAPP"
+    android:padding="1pt">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -28,61 +29,78 @@
                 android:src="@drawable/profile29"
                 android:padding="2pt"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="84dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/txtUsuario"
-                android:layout_weight="0.45"
-                android:gravity="center_vertical" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/txtUsuario"
+                    android:layout_weight="0.45"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:id="@+id/totEco"
+                    android:layout_weight="0.45"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="105dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/background_evento"
-            >
+            android:layout_marginTop="2pt">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/txtLevel"
+                android:layout_weight="0.45"
+                android:gravity="center_vertical|center_horizontal" />
 
             <ProgressBar
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
+                android:id="@+id/progressLevel"
                 android:layout_gravity="center_horizontal"
                 android:progressDrawable="@drawable/progressbar_custon"
                 android:progress="50"
                 android:max="250"
-                android:layout_marginTop="10dp"
-                android:padding="3pt"/>
+                android:padding="1pt"
+                android:indeterminate="false" />
             <TextView
-                android:id="@+id/tv_progress_horizontal"
+                android:id="@+id/txtProgress"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/progressBar"
+                android:layout_alignBottom="@id/progressLevel"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="50/250" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="5"
-                android:id="@+id/textView8"
-                android:gravity="center" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/background_evento">
+            android:background="@drawable/background_evento"
+            android:layout_marginTop="2pt">
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/listView"
+                android:id="@+id/listViewPerfil"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>

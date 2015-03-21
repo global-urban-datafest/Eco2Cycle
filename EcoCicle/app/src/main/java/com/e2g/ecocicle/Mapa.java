@@ -2,7 +2,12 @@ package com.e2g.ecocicle;
 
 //import android.app.FragmentManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -23,11 +28,13 @@ import android.widget.ListView;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.e2g.ecocicle.Model.PontoTroca;
 import com.e2g.ecocicle.Model.ProductPoint;
 import com.e2g.ecocicle.Util.Main;
 import com.e2g.ecocicle.WebService.WebServiceCliente;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -46,6 +53,9 @@ public class Mapa extends ActionBarActivity{
 
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private SharedPreferences prefMain;
+    private SharedPreferences.Editor editor;
+
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +63,14 @@ public class Mapa extends ActionBarActivity{
         setContentView(R.layout.activity_mapa);
         setUpMapIfNeeded();
 
+        prefMain = getSharedPreferences(LoginFragment.URL_PREF, Context.MODE_PRIVATE);
+        String login = prefMain.getString("login", "");
+
         //itens do menu
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroud_menu)));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.backgroudAPPDOIS)));
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.back_spash));
         getSupportActionBar().setTitle("Eco 2 Cycle");
 
         //MENU LATERAL
@@ -113,7 +127,9 @@ public class Mapa extends ActionBarActivity{
         }else{
             mPlanetTitles = getResources().getStringArray(R.array.options_array_no_user);
         }
-        mPlanetTitles[1] = name;
+        if(!name.equals("")){
+            mPlanetTitles[1] = name;
+        }
         mDrawerList.setAdapter(new ArrayAdapter<>(this,
                 R.layout.drawer_list_item, mPlanetTitles));
 
@@ -124,8 +140,17 @@ public class Mapa extends ActionBarActivity{
                 selecionaItem(position);
             }
         });
+
+        selecionaItem(0);
     }
 
+    public void abreFechaMenu(){
+        if (mDrawerLayout.isDrawerOpen(mDrawerList)){
+            mDrawerLayout.closeDrawer(mDrawerList);
+        }else{
+            mDrawerLayout.openDrawer(mDrawerList);
+        }
+    }
     public void selecionaItem(int posicao){
         //update no menu..
         mDrawerList.setItemChecked(posicao, true);
@@ -162,20 +187,44 @@ public class Mapa extends ActionBarActivity{
                 break;
             case "My EcoCoins":
                 if(logado()){
-                    Log.i("Clicado"," 4");
+                    fragment = new MyEcoCoinsFragment();
                 }else{
                     exibeAlerta();
                 }
                 break;
-            case "EcoExchange":
+            case "EcoCoins Store":
                 if (logado()){
-                    fragment = new MyEcoCoinsFragment();
+                    fragment = new EcoEnchangeFragment();
                 }else{
                     exibeAlerta();
                 }
                 break;
             case "Simulation":
                 fragment = new SimulationFragment();
+                break;
+            case "Logout":
+                AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+                alerta.setTitle("Logout!");
+                alerta.setMessage("Are you sure?");
+                alerta.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                ((Main)getApplication()).setUsuarioNaApp(null);
+                                editor = prefMain.edit();
+                                editor.clear().commit();
+                                changeMenuLateral("");
+                                dialog.dismiss();
+                            }
+                        });
+                alerta.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alerta.show();
                 break;
             default:
                 if (logado()){
@@ -206,6 +255,7 @@ public class Mapa extends ActionBarActivity{
         });
         alerta.show();
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
@@ -264,8 +314,39 @@ public class Mapa extends ActionBarActivity{
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 new RecuperaPontos().execute();
+                Location minhaLoc = getMyLocation();
+                if (minhaLoc != null){
+                    LatLng currentCoordinates = new LatLng(
+                            minhaLoc.getLatitude(),
+                            minhaLoc.getLongitude());
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 9));
+                }else{
+                    Log.i("MAP", "pegou o else");
+                    Toast.makeText(this, "Activate the GPS to show your position!", Toast.LENGTH_LONG).show();
+                    LatLng currentCoordinates = new LatLng(
+                            -23.5724765,
+                            -46.6493565);
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentCoordinates, 7));
+                }
             }
         }
+    }
+
+    private Location getMyLocation() {
+        // Get location from GPS if it's available
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        // Location wasn't found, check the next most accurate place for the current location
+        if (myLocation == null) {
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+            // Finds a provider that matches the criteria
+            String provider = lm.getBestProvider(criteria, true);
+            // Use the provider to get the last known location
+            myLocation = lm.getLastKnownLocation(provider);
+        }
+        return myLocation;
     }
 
     class RecuperaPontos extends AsyncTask<Void, Void, ArrayList<PontoTroca>>{
@@ -273,7 +354,7 @@ public class Mapa extends ActionBarActivity{
         protected ArrayList<PontoTroca> doInBackground(Void... params) {
             ArrayList<PontoTroca> pontos = null;
             try{
-                String url = "http://ecociclews.mybluemix.net/api/point/0";
+                String url = "http://ecocicle.mybluemix.net/api/point/0";
                 String[] resposta = new WebServiceCliente().get(url);
                 if (resposta[0].equals("200")) {
                     Gson gson = new Gson();

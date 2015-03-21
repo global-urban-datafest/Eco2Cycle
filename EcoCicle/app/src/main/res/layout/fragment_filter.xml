@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.e2g.ecocicle.FilterFragment"
-    android:background="#ffffffff">
+    android:background="@color/backgroudAPP"
+    android:padding="1dip">
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
@@ -13,5 +14,6 @@
         android:id="@+id/listaFilters"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:padding="2dip"/>
 </FrameLayout>

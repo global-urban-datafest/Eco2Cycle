@@ -11,6 +11,7 @@ public class Operation{
     private Float ecoCoin;
     private ProductPoint productPointidProdutoPonto;
     private Client clientidCliente;
+    private Boolean buy;
 
     public Operation() {
     }
@@ -53,6 +54,14 @@ public class Operation{
 
     public Client getClientidCliente() {
         return clientidCliente;
+    }
+
+    public Boolean getBuy() {
+        return buy;
+    }
+
+    public void setBuy(Boolean buy) {
+        this.buy = buy;
     }
 
     public void setClientidCliente(Client clientidCliente) {

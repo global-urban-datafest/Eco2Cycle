@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.e2g.ecocicle.Model.Product;
 import com.e2g.ecocicle.WebService.WebServiceCliente;
@@ -20,7 +22,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -38,6 +42,8 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
     private TextView txtPrice;
     private TextView txtEco;
 
+    private EditText quantidade;
+
     private LinearLayout typeTwo;
 
     public SimulationFragment() {
@@ -48,6 +54,24 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         new RecuperaProductos().execute();
         rootView = inflater.inflate(R.layout.fragment_simulation, container, false);
+
+        rootView.setFocusableInTouchMode(true);
+        rootView.requestFocus();
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    ((Mapa)getActivity()).changeMenuLateral("");
+                    return true;
+                }else if(keyCode == KeyEvent.KEYCODE_MENU){
+                    ((Mapa)getActivity()).abreFechaMenu();
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        });
+
         btnType = (Button) rootView.findViewById(R.id.btnTypeElement);
         btnTypeTwo = (Button) rootView.findViewById(R.id.btnTypeMat);
         btnCalculate = (Button) rootView.findViewById(R.id.btnCalculate);
@@ -56,6 +80,8 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
         btnType.setOnClickListener(this);
         btnTypeTwo.setOnClickListener(this);
         btnCalculate.setOnClickListener(this);
+
+        quantidade = (EditText) rootView.findViewById(R.id.editQuantidade);
         return rootView;
     }
 
@@ -75,18 +101,27 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
     }
 
     private void calculaValores(){
-        LinearLayout layoutValores = (LinearLayout) rootView.findViewById(R.id.sim_lin_resp);
-        layoutValores.setVisibility(View.VISIBLE);
-        EditText quantidade = (EditText) rootView.findViewById(R.id.editQuantidade);
-        Double doubQuantidade = Double.parseDouble(quantidade.getText().toString());
+        //DecimalFormat formatter = new DecimalFormat("0.00");
+        if(quantidade.getText().toString().equals("") || quantidade.getText().toString().equals("0")
+                || quantidade.getText().toString().equals(" ")){
+            Toast.makeText(getActivity(), "Enter a valid amount!", Toast.LENGTH_SHORT).show();
+        }else {
+            LinearLayout layoutValores = (LinearLayout) rootView.findViewById(R.id.sim_lin_resp);
+            layoutValores.setVisibility(View.VISIBLE);
+            Double doubQuantidade = Double.parseDouble(quantidade.getText().toString());
 
-        Double doubTotPrice = Double.parseDouble(txtPrice.getText().toString());
-        Double doubTotEco = Double.parseDouble(txtEco.getText().toString());
+            Float doubTotPrice = Float.parseFloat(txtPrice.getText().toString());
+            Float doubTotEco = Float.parseFloat(txtEco.getText().toString());
 
-        TextView totEco = (TextView) rootView.findViewById(R.id.txtTotEco);
-        totEco.setText("" + (doubQuantidade * doubTotEco));
-        TextView totPrice = (TextView) rootView.findViewById(R.id.txtTotPrice);
-        totPrice.setText("" + (doubQuantidade * doubTotPrice));
+            TextView totEco = (TextView) rootView.findViewById(R.id.txtTotEco);
+            String result = String.format("%.2f", (doubQuantidade * doubTotEco));
+            totEco.setText(result);
+
+
+            TextView totPrice = (TextView) rootView.findViewById(R.id.txtTotPrice);
+            result = String.format("%.2f", (doubQuantidade * doubTotPrice));
+            totPrice.setText(result);
+        }
     }
 
     private void disparaLista(){
@@ -106,7 +141,7 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
 
     private void disparaListaDois(){
         final AlertDialog.Builder alerta = new AlertDialog.Builder(getActivity());
-        alerta.setTitle("Materiais");
+        alerta.setTitle("Materials");
         List<CharSequence> charSequences = new ArrayList<>();
         for (Product p : todosProdutos){
             if (p.getMaterial().equals(btnType.getText().toString())){
@@ -136,9 +171,17 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
         }
         if (product != null) {
             txtPrice = (TextView) rootView.findViewById(R.id.txtPrice);
+            Log.i("DOUBLE", "" + product.getPrice());
+            //DecimalFormat formatter = new DecimalFormat("0.00");
+            //txtPrice.setText(formatter.format(product.getPrice()));
+
             txtPrice.setText(product.getPrice().toString());
+
             txtEco = (TextView) rootView.findViewById(R.id.txtEco);
+            //Log.i("DOUBLE", "" + product.getEcocoin());
+            //txtEco.setText(formatter.format(product.getEcocoin()));
             txtEco.setText(product.getEcocoin().toString());
+
             TextView txtUnity = (TextView) rootView.findViewById(R.id.txtUnity);
             txtUnity.setText(product.getUnity().toString());
             LinearLayout layoutPrice = (LinearLayout) rootView.findViewById(R.id.sim_lin_price);
@@ -151,13 +194,16 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
             layoutQuantidade.setVisibility(View.VISIBLE);
             LinearLayout layoutCalculate= (LinearLayout) rootView.findViewById(R.id.sim_lin_calculate);
             layoutCalculate.setVisibility(View.VISIBLE);
+            LinearLayout layoutTotalInf= (LinearLayout) rootView.findViewById(R.id.sim_lin_tot_inf);
+            layoutTotalInf.setVisibility(View.VISIBLE);
+
         }
     }
 
     class RecuperaProductos extends AsyncTask<Void, Void, ArrayList<Product>> {
         @Override
         protected ArrayList<Product> doInBackground(Void... params) {
-            String url = "http://ecociclews.mybluemix.net/api/product/0";
+            String url = "http://ecocicle.mybluemix.net/api/product/torecycle/0";
             //Log.i("URL", " " + url);
             String[] resposta = new WebServiceCliente().get(url);
             ArrayList<Product> products = null;
@@ -174,7 +220,9 @@ public class SimulationFragment extends Fragment implements View.OnClickListener
             todosProdutos = produtos;
             List<CharSequence> charSequences = new ArrayList<>();
             for(Product p : produtos){
-                charSequences.add(p.getMaterial());
+                if(!charSequences.contains(p.getMaterial())){
+                    charSequences.add(p.getMaterial());
+                }
             }
             itensMeterial = charSequences.toArray(
                     new CharSequence[charSequences.size()]);
