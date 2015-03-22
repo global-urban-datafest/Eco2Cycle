@@ -17,11 +17,13 @@
         document.getElementById("price").value = eco[2];
 
         var qtd = document.getElementById("qtd").value;
+//        document.getElementById("sizing-addon2").value  ;
+
         var json = "{" +
-        "\"idOperacao\":\"0\",\"price\":\""+ (parseFloat(eco[2])*parseFloat(qtd))+"\" ,\"ecoCoin\": \""+(parseFloat(eco[1])*parseFloat(qtd))+"\",\"productPointidProdutoPonto\":{\"idProdutoPonto\": \""+eco[0]+"\"},\"clientidCliente\":{\"idCliente\":\"201\"}}";
-        document.getElementById("result").innerHTML = "json : "+json;
-        document.getElementById("result").innerHTML ="Eco-Coin "+ (parseFloat(eco[1])*parseFloat(qtd))+" R$ "+ (parseFloat(eco[2])*parseFloat(qtd))+
-        "<br><div align='center'> <iframe  width=\"310\" height=\"310\" frameborder=\"0\" src='http://api.qrserver.com/v1/create-qr-code/?size=300x300&data="+json+"'\"></iframe></div>";
+        "\"idOperacao\":\"0\",\"price\":\""+ (parseFloat(eco[2])*parseFloat(qtd))+"\" ,\"ecoCoin\": \""+(parseFloat(eco[1])*parseFloat(qtd))+"\",\"buy\":\"false\",\"productPointidProdutoPonto\":{\"idProdutoPonto\": \""+eco[0]+"\"},\"clientidCliente\":{\"idCliente\":\"201\"}}";
+//        document.getElementById("result").innerHTML = "json : "+json;
+        document.getElementById("result").innerHTML ="Eco-Coin "+ (parseFloat(eco[1])*parseFloat(qtd))+" $ "+ (parseFloat(eco[2])*parseFloat(qtd))+
+        "<br><div align='center'> <iframe  width=\"333\" height=\"333\" frameborder=\"0\" src='http://api.qrserver.com/v1/create-qr-code/?size=300x300&data="+json+"'\"></iframe></div>";
     }
 
 </script>
@@ -33,7 +35,7 @@ $_GET['page']='sim';
 include "../template/menu.php" ?>
 
 <?php
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/productpoint/produtosponto/'.$_SESSION['point']->idPontoColeta);
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/productpoint/produtosponto/'.$_SESSION['point']->idPontoColeta);
 $products = json_decode($response);
 
 ?>
@@ -44,36 +46,36 @@ $products = json_decode($response);
     </optgroup>
 
     <?php foreach($products as $pp){
-        $response3 = file_get_contents('http://ecociclews.mybluemix.net/api/product/'.$pp->productidProduto);
+        $response3 = file_get_contents('http://ecocicle.mybluemix.net/api/product/'.$pp->productidProduto);
         $pro = json_decode($response3);
         echo "<option value=\"$pp->idProdutoPonto,$pro->ecocoin,$pp->price\">".$pro->product."</option>";
     }?>
 
 </select>
-    <div style="width: 400px">
+    <div >
         <div class="input-group" style="bottom: 5px; top: 3px">
             <span class="input-group-addon" id="sizing-addon2">Eco-Coin</span>
             <input disabled="disabled" id="eco" type="text" class="form-control" placeholder="Eco-Coin" aria-describedby="sizing-addon2">
         </div>
     </div>
-    <div style="width: 400px; top: 5px;">
+    <div style="top: 5px;">
         <div class="input-group" style="bottom: 5px; top: 3px">
-            <span class="input-group-addon" id="sizing-addon2">R$</span>
+            <span class="input-group-addon" id="sizing-addon2">$</span>
             <input disabled="disabled" id="price" type="text" class="form-control" placeholder="Price" aria-describedby="sizing-addon2">
         </div>
     </div>
 
-    <div style="width: 400px">
+    <div>
         <div class="input-group" style="bottom: 5px; top: 3px">
-            <span class="input-group-addon" id="sizing-addon2">Quantidade </span>
+            <span class="input-group-addon" id="sizing-addon2">Amount <?php echo $pro->unity ?> </span>
             <input id="qtd" type="text" class="form-control" placeholder="Quantidade" aria-describedby="sizing-addon2" value="0" onkeyup="pegaParada()">
         </div>
     </div>
 </div>
 
 <div id="section">
-    <h1 id="result">Eco-Coin 1235 R$ 10,23</h1>
-    <h1 id="json">Json 1235 R$ 10,23</h1>
+    <h1 id="result">Eco-Coin 1235 $ 10,23</h1>
+<!--    <h1 id="json">Json 1235 R$ 10,23</h1>-->
 </div>
 
 </body>

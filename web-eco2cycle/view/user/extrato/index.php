@@ -1,14 +1,47 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: guardezi
- * Date: 08/03/15
- * Time: 18:19
- */
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8" />
+    <title>Eco2Cycle</title>
+<!--    <link rel="stylesheet" href="/view/css/styles.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!--    css que faz a borda-->
+    <link href="/view/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .bs-example{
+            margin: 20px;
+        }
+        /* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+        .form-horizontal .control-label{
+            padding-top: 7px;
+        }
+        body,html{
+            height: 100%;
+            width: 100%;
+        }
+        .navqw {
+            line-height:30px;
+            height:30%;
+            width:250px;
+            float:left;
+            padding:5px;
+        }
+        .nave {
+            line-height:30px;
+            height:30%;
+            width:250px;
+            float:left;
+            padding:5px;
+        }
+        .section {
+            width:40%;
+            float:left;
+            padding:10px;
+        }
 
-
-include "../template/header.php" ?>
-
+    </style>
 <script type="text/css">
     @media only screen and (max-width: 800px) {
 
@@ -58,6 +91,7 @@ include "../template/header.php" ?>
         Label the data
         */
         #no-more-tables td:before { content: attr(data-title); }
+
     }
 
 
@@ -67,14 +101,16 @@ include "../template/header.php" ?>
 <body>
 <?php
 $_GET['page']='prof';
-include "../template/menu.php";
+$_GET['type']='user';
 
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/client/operations/'.$user->idCliente);
+include "../../template/menu.php";
+
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/client/operations/sell/'.$user->idCliente);
 $operations = json_decode($response);
 
 ?>
-
-    <div id="navqw">
+<div class="container">
+    <div class="navqw">
         <div align="center">
             <h3 align="center"><?php echo $user->login ?></h3>
             <img  src="../profile/user.png" class="img-circle">
@@ -87,7 +123,7 @@ $operations = json_decode($response);
             </div>
             <h4>ECo-Coins: <?php
 
-                $response = file_get_contents('http://ecociclews.mybluemix.net/api/client/coins/'.$user->idCliente);
+                $response = file_get_contents('http://ecocicle.mybluemix.net/api/client/coins/'.$user->idCliente);
 
                 //echo $response;
                 $coins = json_decode($response);
@@ -98,7 +134,7 @@ $operations = json_decode($response);
                 echo $coins->coins ?></h5>
         </div>
     </div>
-    <div id="section" class="container">
+    <div class="section" >
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-center">
@@ -142,9 +178,7 @@ $operations = json_decode($response);
                 </table>
             </div>
         </div>
-
     </div>
-
-
+</div>
 </body>
-<?php include "../template/foot.php" ?>
+</html>

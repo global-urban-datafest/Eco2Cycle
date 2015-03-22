@@ -6,14 +6,23 @@
  * Time: 18:19
  */
 
+
+if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
+
+    $logado = true;
+    $user = $_SESSION['point'];
+}
+
 include "../template/header.php"?>
+
+
 </head>
 <body>
 <?php
 $_GET['page']='prof';
 include "../template/menu.php" ?>
 
-    <div id="nav"; ">
+    <div class="navqw"; ">
         <div align="center">
             <h3 align="center"><?php echo $point->responsavel ?></h3>
             <img  src="../profile/user.png" class="img-circle">
@@ -28,7 +37,7 @@ include "../template/menu.php" ?>
         </div>
     </div>
 
-    <div id="section" ">
+    <div class="section" ">
 
         <h4>Glass</h4>
         <div class="progress">
@@ -68,4 +77,4 @@ include "../template/menu.php" ?>
 
     </div>
 </body>
-<?php include "../../template/foot.php" ?>
+<?php include "../template/foot.php" ?>

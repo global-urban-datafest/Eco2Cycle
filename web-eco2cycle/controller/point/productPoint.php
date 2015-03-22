@@ -22,7 +22,7 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
 
 
 //API Url
-$url = 'http://ecociclews.mybluemix.net/api/productpoint/';
+$url = 'http://ecocicle.mybluemix.net/api/productpoint/';
 
 
 //Initiate cURL.
@@ -30,13 +30,18 @@ $ch = curl_init($url);
 
 
 
-$respo  = file_get_contents('http://ecociclews.mybluemix.net/api/product/'.$_POST['idProd']);
+$respo  = file_get_contents('http://ecocicle.mybluemix.net/api/product/'.$_POST['idProd']);
 $prod = json_decode($respo);
+
+$jsonPonto = array("idPontoColeta"=>$point->idPontoColeta);
+$jsonPonto = json_encode($jsonPonto);
+$jsonPonto = json_decode($jsonPonto);
+
 
 //The JSON data.
 $jsonData = array(
     "idProdutoPonto"=>"0",
-    "pontoTrocaidPontoColeta"=> $point,
+    "pontoTrocaidPontoColeta"=> $jsonPonto,
     "productidProduto"=>$prod,
     "price"=> $_POST['price'],
     "ecocoin"=>$prod->ecocoin
@@ -44,7 +49,7 @@ $jsonData = array(
 
 //Encode the array into JSON.
 $jsonDataEncoded = json_encode($jsonData);
-//echo $jsonDataEncoded;
+echo $jsonDataEncoded;
 
 //Tell cURL that we want to send a POST request.
 curl_setopt($ch, CURLOPT_POST, 1);

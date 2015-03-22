@@ -16,14 +16,14 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
 
     $logado = true;
     $user = $_SESSION['point'];
-    header("Location: /view/point/profile/");
+    header("Location: ../../view/point/");
     exit;
 }
 
 
 
 //API Url
-$url = 'http://ecociclews.mybluemix.net/api/point/login/';
+$url = 'http://ecocicle.mybluemix.net/api/point/login/';
 
 
 //Initiate cURL.
@@ -75,7 +75,7 @@ try {
         $_SESSION['point'] = $point;
 
         session_commit();
-        header("Location: /view/point/profile/");
+        header("Location: ../../view/point/profile/");
         exit;
 
     }

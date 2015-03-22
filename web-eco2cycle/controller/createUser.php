@@ -23,7 +23,7 @@ if ((isset($_SESSION['cliente']) && $_SESSION['cliente'] != '')) {
 
 
     //API Url
-    $url = 'http://ecociclews.mybluemix.net/api/client/';
+    $url = 'http://ecocicle.mybluemix.net/api/client/';
 
 
     //Initiate cURL.

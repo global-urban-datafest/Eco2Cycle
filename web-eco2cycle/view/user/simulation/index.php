@@ -1,6 +1,30 @@
-<?php include "../template/header.php" ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Eco2Cycle</title>
+    <link rel="stylesheet" href="http://eco2cycle.mybluemix.net/view/user/template/css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/view/css/bootstrap.min.css">
+    <style type="text/css">
+        .bs-example{
+            margin: 20px;
+        }
+        /* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+        .form-horizontal .control-label{
+            padding-top: 7px;
+        }
+        body,html{
+            height: 100%;
+            width: 100%;
+        }
 
-<meta charset="utf-8">
+    </style>
+
+    <meta charset="utf-8">
 
   <link rel="stylesheet" type="text/css" href="dist/css/bootstrap-select.css">
   <script type="text/javascript" src="dist/js/bootstrap-select.js"></script>
@@ -26,16 +50,20 @@
 
 <?php
 $_GET['page']='sim';
-include "../template/menu.php" ?>
+$_GET['type']='user';
+include "../../template/menu.php" ?>
 
 <?php
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/product/0');
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/product/torecycle/0');
 $products = json_decode($response);
 
 ?>
 
 
 <div class="container">
+
+
+    <h2 align="center">Simulation</h2>
 
    <select id="first-disabled"  data-hide-disabled="true" data-live-search="true" onclick="pegaParada()">
     <optgroup disabled="disabled" label="disabled">
@@ -47,7 +75,7 @@ $products = json_decode($response);
         }?>
 
   </select>
-    <div style="width: 400px">
+    <div style="width: 400px;alignment: ">
         <div class="input-group" style="bottom: 5px; top: 3px">
             <span class="input-group-addon" id="sizing-addon2">Eco-Coin</span>
             <input id="eco" type="text" class="form-control" placeholder="Eco-Coin" aria-describedby="sizing-addon2">
@@ -67,7 +95,9 @@ $products = json_decode($response);
         </div>
     </div>
 
-<h1 id="result">Eco-Coin 1235 R$ 10,23</h1>
+<h1 id="result">Eco-Coin 0 R$ 0</h1>
+    </div>
 
+</div>
 </body>
 </html>

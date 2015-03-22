@@ -23,7 +23,7 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
 
 
     //API Url
-    $url = 'http://ecociclews.mybluemix.net/api/point/';
+    $url = 'http://ecocicle.mybluemix.net/api/point/';
 
 
     //Initiate cURL.

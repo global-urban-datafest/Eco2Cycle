@@ -5,3 +5,7 @@
  * Date: 10/03/15
  * Time: 20:17
  */
+
+header("Location: map/");
+exit;
+?>

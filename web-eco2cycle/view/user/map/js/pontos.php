@@ -6,7 +6,7 @@
  * Time: 18:33
  */
 
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/point/0');
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/point/0');
 
 echo $response;
 ?>

@@ -9,7 +9,7 @@ session_start();
 
 
 
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/product/0');
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/product/0');
 
 //echo $response;
 

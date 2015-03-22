@@ -6,5 +6,6 @@
  * Time: 01:41
  */
 
-header("Location: profile/");
+header("Location: profile/index.php");
 exit;
+?>

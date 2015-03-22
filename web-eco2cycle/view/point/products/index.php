@@ -31,12 +31,12 @@ $_GET['page']='prod';
 include "../template/menu.php" ?>
 
 <?php
-$response = file_get_contents('http://ecociclews.mybluemix.net/api/product/0');
+$response = file_get_contents('http://ecocicle.mybluemix.net/api/product/torecycle/0');
 $products = json_decode($response);
 
 
 
-$url='http://ecociclews.mybluemix.net/api/productpoint/produtosponto/'.$_SESSION['point']->idPontoColeta;
+$url='http://ecocicle.mybluemix.net/api/productpoint/produtosponto/'.$_SESSION['point']->idPontoColeta;
 
 $response2 = file_get_contents($url);
 $pointProducts = json_decode($response2);
@@ -80,7 +80,7 @@ $pointProducts = json_decode($response2);
         </tr>
         <?php
             foreach ($pointProducts as $pp){
-                $response3 = file_get_contents('http://ecociclews.mybluemix.net/api/product/'.$pp->productidProduto);
+                $response3 = file_get_contents('http://ecocicle.mybluemix.net/api/product/'.$pp->productidProduto);
 
                 $pro = json_decode($response3);
                 echo "<tr>";

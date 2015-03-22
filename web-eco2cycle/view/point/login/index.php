@@ -5,7 +5,7 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
 
     $logado = true;
     $user = $_SESSION['point'];
-    header("Location: /view/point/profile/");
+    header("Location: ../view/point/profile/");
     exit;
 }
 

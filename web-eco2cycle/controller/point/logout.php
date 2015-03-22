@@ -8,6 +8,6 @@
 
 session_start();
 session_destroy();
-header("Location: /view/user/map/");
+header("Location: ../../view/point/");
 exit;
 ?>

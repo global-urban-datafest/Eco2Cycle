@@ -7,5 +7,7 @@
  */
 ?>
 
+    <!--fecha o container    -->
+    </div>
 </body>
 </html>

@@ -35,7 +35,8 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">E2C</a>
+            <a class="navbar-brand" href="/"><img alt="Brand" src="/view/img/logoCycle.png"></a>
+
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +60,7 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
                 </li>
                  "; }?>
 
-                <li <?php echo $page =='sim'?"class='active'":"" ?> ><a href="../coleta"> Coleta <span class="sr-only">(current)</span></a></li>
+                <li <?php echo $page =='sim'?"class='active'":"" ?> ><a href="../coleta"> Collect <span class="sr-only">(current)</span></a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -67,7 +68,7 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><?php echo $logado?"$point->responsavel":"Guest" ?> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a <?php echo !$logado? "href=\"../login/\">Sign in":"href=\"../../../controller/logout.php\">Logout" ?>   </a></li>
+                        <li><a <?php echo !$logado? "href=\"../login/\">Sign in":"href=\"../../../controller/point/logout.php\">Logout" ?>   </a></li>
                         <?php echo !$logado?"<li><a href=\"../login/newuser.php\" > SignUp</a></li>":"" ?>
                     </ul>
                 </li>
@@ -75,3 +76,4 @@ if ((isset($_SESSION['point']) && $_SESSION['point'] != '')) {
         </div>
     </div>
 </nav>
+<div class="container">
