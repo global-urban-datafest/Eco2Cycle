@@ -50,6 +50,13 @@ public class Product implements Serializable {
    private Float ecocoin;
    @Column(name = "unity")
    private String unity;
+   @Column(name ="buy")
+   private boolean buy;
+   
+   @Column(name = "img")
+   private String img;
+   
+   
    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productidProduto")
    private Collection<ProductPoint> productPointCollection;
 
@@ -108,7 +115,15 @@ public class Product implements Serializable {
        this.unity = unity;
    }
 
-   @XmlTransient
+   public boolean isBuy() {
+	return buy;
+}
+
+public void setBuy(boolean buy) {
+	this.buy = buy;
+}
+
+@XmlTransient
    public Collection<ProductPoint> getProductPointCollection() {
        return productPointCollection;
    }
@@ -116,14 +131,25 @@ public class Product implements Serializable {
    public void setProductPointCollection(Collection<ProductPoint> productPointCollection) {
        this.productPointCollection = productPointCollection;
    }
+   
+   
 
-   @Override
+   public String getImg() {
+	return img;
+}
+
+public void setImg(String img) {
+	this.img = img;
+}
+
+@Override
    public int hashCode() {
        int hash = 0;
        hash += (idProduto != null ? idProduto.hashCode() : 0);
        return hash;
    }
 
+   
    @Override
    public boolean equals(Object object) {
        // TODO: Warning - this method won't work in the case the id fields are not set
@@ -144,12 +170,16 @@ public class Product implements Serializable {
                "\"product\": \"%s\"," +
                "\"price\": \"%.2f\"," +
                "\"ecocoin\": \"%.2f\"," +
+               "\"buy\": \"%s\"," +
+               "\"img\": \"%s\"," +
                "\"unity\": \"%s\"" +"}",
                 idProduto!=null?idProduto:null, 
         		material!=null?material:null,
 				product!=null?product:null,
 				price!=null?price:null,
 				ecocoin!=null?ecocoin:null,
+				String.valueOf(buy),
+				img!=null?img:null,
 				unity!=null?unity:null);
 
    }

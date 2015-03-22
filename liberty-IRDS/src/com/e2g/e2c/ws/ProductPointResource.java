@@ -1,5 +1,6 @@
 package com.e2g.e2c.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -103,6 +104,11 @@ public class ProductPointResource {
 		try{	
 			if(id==0){
 				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findAll",ProductPoint.class).getResultList();
+				for (ProductPoint productPoint : ents) {
+					if(productPoint.getPrice()==null){
+						ents.remove(productPoint);
+					}
+				}
 				json = ents.toString();
 			}else{
 				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findByPoint",ProductPoint.class).setParameter("idPonto", id).getResultList();
@@ -115,6 +121,76 @@ public class ProductPointResource {
 		return Response.ok(json).build();
 	}
 	
-	
+	@GET
+	@Path("/produtosponto/sell/{idponto}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProdutosPontoSell(@PathParam("idponto") Long id){
+		ProductPoint ent = new ProductPoint((long)0);
+		String json = ent.toString();
+		try{	
+			if(id==0){
+				List<ProductPoint> list = em.createNamedQuery("ProductPoint.findAll",ProductPoint.class).getResultList();
+				List<ProductPoint> ents = new ArrayList<ProductPoint>();
+				for (ProductPoint productPoint : list) {
+					if(productPoint.getProductidProduto().isBuy()){
+						ents.add(productPoint);
+					}
+				}
+				json = ents.toString();
+			}else{
+				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findByPoint",ProductPoint.class).setParameter("idPonto", id).getResultList();
+				json = ents.toString();
+			}
+			
+		}catch (Exception er) {
+			json= ent.toString();
+		}
+		return Response.ok(json).build();
+	}
+	@GET
+	@Path("/produtosponto/sell/mobile")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProductsMobile(){
+		long id = 51;
+		ProductPoint ent = new ProductPoint((long)0);
+		String json = ent.toString();
+		try{	
+			if(id==0){
+				List<ProductPoint> list = em.createNamedQuery("ProductPoint.findAll",ProductPoint.class).getResultList();
+				List<ProductPoint> ents = new ArrayList<ProductPoint>();
+				for (ProductPoint productPoint : list) {
+					if(productPoint.getProductidProduto().isBuy()){
+						ents.add(productPoint);
+					}
+				}
+				StringBuilder sb = new StringBuilder("[");
+				for (ProductPoint productPoint : ents) {
+					sb.append(productPoint.toSell()).append(",");
+				}
+				if(sb.charAt(sb.length()-1)==','){
+					sb.deleteCharAt(sb.length()-1);
+				}
+				sb.append("]");
+				json = sb.toString() ;
+				
+			}else{
+				List<ProductPoint> ents = em.createNamedQuery("ProductPoint.findByPoint",ProductPoint.class).setParameter("idPonto", id).getResultList();
+				StringBuilder sb = new StringBuilder("[");
+				for (ProductPoint productPoint : ents) {
+					sb.append(productPoint.toSell()).append(",");
+				}
+				if(sb.charAt(sb.length()-1)==','){
+					sb.deleteCharAt(sb.length()-1);
+				}
+				sb.append("]");
+				json = sb.toString() ;
+				
+			}
+			
+		}catch (Exception er) {
+			json= ent.toString();
+		}
+		return Response.ok(json).build();
+	}
 		
 }

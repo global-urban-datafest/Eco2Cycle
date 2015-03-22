@@ -1,18 +1,26 @@
 ---
 applications:
 - services:
-  - wscicle-sqldb
-  - wscicle-MonitoringAndAnalytics
+  - ecocycle-sqldb
+  - ecocycle-MonitoringAndAnalytics
   disk_quota: 1024M
-  host: wscicle
-  name: wscicle
+  host: ecocycle
+  name: ecocycle
   path: libertyDBApp.war
   domain: mybluemix.net
   instances: 1
+  memory: 512M
+- name: Ecocicle
   memory: 1024M
+  host: ecocicle
+  domain: mybluemix.net
+  env: {
+    }
+  services: {
+    }
 - name: liberty-IRDS
   memory: 1024M
-  host: ecociclews
+  host: ecocicle
   domain: mybluemix.net
   env: {
     }

@@ -27,9 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
    @NamedQuery(name = "Operation.findAll", query = "SELECT o FROM Operation o"),
+   @NamedQuery(name = "Operation.findByidPoint", query = "SELECT o FROM Operation o WHERE o.productPointidProdutoPonto.pontoTrocaidPontoColeta.idPontoColeta = :idPontoColeta"),
    @NamedQuery(name = "Operation.findByIdOperacao", query = "SELECT o FROM Operation o WHERE o.idOperacao = :idOperacao"),
    @NamedQuery(name = "Operation.findByPrice", query = "SELECT o FROM Operation o WHERE o.price = :price"),
    @NamedQuery(name = "Operation.findByClient", query = "SELECT o FROM Operation o WHERE o.clientidCliente = :idCliente"),
+   @NamedQuery(name = "Operation.findByProductPoint", query = "SELECT o FROM Operation o WHERE o.productPointidProdutoPonto = :productPointidProdutoPonto"),
    @NamedQuery(name = "Operation.findByEcoCoin", query = "SELECT o FROM Operation o WHERE o.ecoCoin = :ecoCoin")})
 public class Operation implements Serializable {
    private static final long serialVersionUID = 1L;
@@ -45,6 +47,8 @@ public class Operation implements Serializable {
    
    @Column(name = "time")
    private Date time;
+   @Column(name ="buy")
+   private boolean buy;
    
    @JoinColumn(name = "ProductPoint_idProdutoPonto", referencedColumnName = "idProdutoPonto")
    @ManyToOne(optional = false)
@@ -52,6 +56,8 @@ public class Operation implements Serializable {
    @JoinColumn(name = "Client_idCliente", referencedColumnName = "idCliente")
    @ManyToOne(optional = false)
    private Client clientidCliente;
+   
+    
 
    
    public Operation() {
@@ -103,13 +109,22 @@ public class Operation implements Serializable {
 
    public Date getTime() {
 	return time;
-}
+   }
+   
 
-public void setTime(Date time) {
-	this.time = time;
-}
+	public void setTime(Date time) {
+		this.time = time;
+	}
+	
+	public boolean isBuy() {
+		return buy;
+	}
 
-@Override
+	public void setBuy(boolean buy) {
+		this.buy = buy;
+	}
+
+	@Override
    public int hashCode() {
        int hash = 0;
        hash += (idOperacao != null ? idOperacao.hashCode() : 0);
@@ -132,17 +147,20 @@ public void setTime(Date time) {
    @Override
    public String toString() {
 	   return String.format("{\"idOperacao\": \"%d\"," +
-           "\"price\": \"%.2f\"," +
-           "\"ecoCoin\": \"%.2f\"," +
+           "\"price\": \"%s\"," +
+           "\"ecoCoin\": \"%s\"," +
            "\"productPointidProdutoPonto\": \"%d\"," +
+           "\"buy\": \"%s\"," +
            "\"clientidCliente\": \"%d\"" +
            "}",
             this.idOperacao!=null?idOperacao:null, 
-    		this.price!=null?price:null,
-			this.ecoCoin!=null?ecoCoin:null,
+    		String.valueOf(this.price!=null?price:null),
+    		String.valueOf(this.ecoCoin!=null?ecoCoin:null),
 			this.productPointidProdutoPonto!=null?productPointidProdutoPonto.getIdProdutoPonto():null,
+			String.valueOf(buy),
 			this.clientidCliente!=null?clientidCliente.getIdCliente():null);
    }
+   
    
    
    public String toStatment() {
@@ -153,6 +171,7 @@ public void setTime(Date time) {
            "\"product\": \"%s\"," +
            "\"price\": \"%.2f\"," +
            "\"ecocoin\": \"%.2f\"," +
+           "\"buy\": \"%s\"," +
            "\"date\": \"%s\"" +
            "}",
             this.idOperacao!=null?idOperacao:null, 
@@ -161,6 +180,7 @@ public void setTime(Date time) {
 			this.productPointidProdutoPonto!=null?productPointidProdutoPonto.getProductidProduto().getProduct():null,
 			this.price!=null?price:null,
 			this.ecoCoin!=null?ecoCoin:null,
+			String.valueOf(buy),
 			this.time!=null?sdf.format(time):null);
    }
 }

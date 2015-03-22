@@ -144,5 +144,19 @@ public class ProductPoint implements Serializable {
 				this.ecocoin!=null?ecocoin:null);
    }
    
+   public String toSell(){
+	   return String.format("{\"idProdutoPonto\": \"%d\"," +
+               "\"name\": \"%s\"," +
+               "\"description\": \"%s\"," +
+               "\"ecocoin\": \"%.2f\"," +
+               "\"img\": \"%s\"" +
+               "}",
+	            this.idProdutoPonto!=null?idProdutoPonto:null, 
+        		this.productidProduto.getProduct()!=null?this.productidProduto.getProduct():null,
+				this.productidProduto.getMaterial()!=null?this.productidProduto.getMaterial():null,
+				this.ecocoin!=null?ecocoin:null,
+				this.productidProduto.getImg()!=null?this.productidProduto.getImg():null);
+   }
+   
 }
 

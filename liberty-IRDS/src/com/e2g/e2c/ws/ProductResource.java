@@ -1,5 +1,6 @@
 package com.e2g.e2c.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -80,6 +81,60 @@ public class ProductResource {
 		try{	
 			if(id==0){
 				List<Product> ents = em.createNamedQuery("Product.findAll",Product.class).getResultList();
+				json =  ents.toString() ;
+			}else{
+				ent = (Product) em.createNamedQuery("Product.findByIdProduto").setParameter("idProduto", id).getSingleResult();
+				json = ent.toString();
+			}
+		}catch (Exception er) {
+			json= ent.toString();
+		}
+		return Response.ok(json).build();
+	}
+	
+	@GET
+	@Path("/torecycle/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProductsToRecycle(@PathParam("id") Long id){
+		Product ent = new Product((long)0);
+		String json = ent.toString();
+		try{	
+			if(id==0){
+				List<Product> list = em.createNamedQuery("Product.findAll",Product.class).getResultList();
+				List<Product> ents = new ArrayList<Product>();
+				for (Product product : list) {
+					if(!product.isBuy()){
+						ents.add(product);
+					}
+				}
+				
+				json =  ents.toString() ;
+			}else{
+				ent = (Product) em.createNamedQuery("Product.findByIdProduto").setParameter("idProduto", id).getSingleResult();
+				json = ent.toString();
+			}
+		}catch (Exception er) {
+			json= ent.toString();
+		}
+		return Response.ok(json).build();
+	}
+	
+	@GET
+	@Path("/tosell/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProductsToRSell(@PathParam("id") Long id){
+		Product ent = new Product((long)0);
+		String json = ent.toString();
+		try{	
+			if(id==0){
+				List<Product> list = em.createNamedQuery("Product.findAll",Product.class).getResultList();
+				List<Product> ents = new ArrayList<Product>();
+				for (Product product : list) {
+					if(product.isBuy()){
+						ents.add(product);
+					}
+				}
+				
 				json =  ents.toString() ;
 			}else{
 				ent = (Product) em.createNamedQuery("Product.findByIdProduto").setParameter("idProduto", id).getSingleResult();

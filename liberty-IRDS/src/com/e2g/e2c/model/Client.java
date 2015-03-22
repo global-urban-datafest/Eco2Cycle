@@ -52,9 +52,6 @@ public class Client implements Serializable {
     
     
     
-    
-    
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientidCliente")
     private Collection<Operation> operationCollection;
 

@@ -89,6 +89,7 @@ public class OperacaoResourse {
 				json = ent.toString();
 			}
 		}catch (Exception er) {
+			System.out.println("CAGADA"+er.getMessage());
 			json= ent.toString();
 		}
 		return Response.ok(json).build();
