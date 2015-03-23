@@ -70,7 +70,7 @@ if(!$logado){
 <div class="container">
     <div class="navqw">
         <div align="center">
-            <h3 align="center"><?php echo $user->login ?></h3>
+            <h3 align="center"><?php echo $user->name ?></h3>
             <img  src="../profile/user.png" class="img-circle">
             <h4>Level <?php echo $profile->Level ?></h4>
             <div class="progress">

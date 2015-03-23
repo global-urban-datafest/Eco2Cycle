@@ -10,7 +10,7 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
-		<meta name="keywords" content="" />
+		<meta name="keywords" content="eco2cycle, Recycle, IBM, Bluemix" />
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.poptrox.min.js"></script>
@@ -92,7 +92,7 @@
 					<header>
 						<h2>RECOVER</h2>
 					</header>
-					<p> Many materials can be 100% recycled, like aluminium and glass, if we Recycle 100% aluminum cans we can save enough energy to light a bedroom for two whole weeks.
+					<p> Many materials can be 100% recycled, like aluminium and glass, if we Recycle 100 aluminum cans we can save enough energy to light a bedroom for two whole weeks.
 
                         Recycling is a important process for the environment, people need to recycle more, but they don’t have the information and no encouragement for doing it.</p>
 				</div>
@@ -111,21 +111,22 @@
                             Recycling is retiring . Change for pleasure is change to be reborn . Recycle you for a better world</p>
 					</header>
 
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/E2OKolDCd14" frameborder="0" allowfullscreen></iframe>
 					<!-- Lightbox Gallery  -->
-						<div class="container 75% gallery">
-							<div class="row 0% images">
-								<div class="6u"><a href="images/fulls/01.jpg" class="image fit from-left"><img src="images/thumbs/01.jpg" title="The Anonymous Red" alt="" /></a></div>
-								<div class="6u"><a href="images/fulls/02.jpg" class="image fit from-right"><img src="images/thumbs/02.jpg" title="Airchitecture II" alt="" /></a></div>
-							</div>
-							<div class="row 0% images">
-								<div class="6u"><a href="images/fulls/03.jpg" class="image fit from-left"><img src="images/thumbs/03.jpg" title="Air Lounge" alt="" /></a></div>
-								<div class="6u"><a href="images/fulls/04.jpg" class="image fit from-right"><img src="images/thumbs/04.jpg" title="Carry on" alt="" /></a></div>
-							</div>
-							<div class="row 0% images">
-								<div class="6u"><a href="images/fulls/05.jpg" class="image fit from-left"><img src="images/thumbs/05.jpg" title="The sparkling shell" alt="" /></a></div>
-								<div class="6u"><a href="images/fulls/06.jpg" class="image fit from-right"><img src="images/thumbs/06.jpg" title="Bent IX" alt="" /></a></div>
-							</div>
-						</div>
+<!--						<div class="container 75% gallery">-->
+<!--							<div class="row 0% images">-->
+<!--								<div class="6u"><a href="images/fulls/01.jpg" class="image fit from-left"><img src="images/thumbs/01.jpg" title="The Anonymous Red" alt="" /></a></div>-->
+<!--								<div class="6u"><a href="images/fulls/02.jpg" class="image fit from-right"><img src="images/thumbs/02.jpg" title="Airchitecture II" alt="" /></a></div>-->
+<!--							</div>-->
+<!--							<div class="row 0% images">-->
+<!--								<div class="6u"><a href="images/fulls/03.jpg" class="image fit from-left"><img src="images/thumbs/03.jpg" title="Air Lounge" alt="" /></a></div>-->
+<!--								<div class="6u"><a href="images/fulls/04.jpg" class="image fit from-right"><img src="images/thumbs/04.jpg" title="Carry on" alt="" /></a></div>-->
+<!--							</div>-->
+<!--							<div class="row 0% images">-->
+<!--								<div class="6u"><a href="images/fulls/05.jpg" class="image fit from-left"><img src="images/thumbs/05.jpg" title="The sparkling shell" alt="" /></a></div>-->
+<!--								<div class="6u"><a href="images/fulls/06.jpg" class="image fit from-right"><img src="images/thumbs/06.jpg" title="Bent IX" alt="" /></a></div>-->
+<!--							</div>-->
+<!--						</div>-->
 
 				</div>
 			</section>
@@ -148,19 +149,19 @@
 			<footer id="footer">
 
 				<!-- Icons -->
-					<ul class="actions">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
-						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-						<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-					</ul>
+<!--					<ul class="actions">-->
+<!--						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>-->
+<!--						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>-->
+<!--						<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>-->
+<!--						<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>-->
+<!--						<li><a href="#" class="icon fa-pinterest"><span class="label">Pinterest</span></a></li>-->
+<!--						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>-->
+<!--					</ul>-->
 
 				<!-- Menu -->
-					<ul class="menu">
-						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
+<!--					<ul class="menu">-->
+<!--						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>-->
+<!--					</ul>-->
 
 			</footer>
 

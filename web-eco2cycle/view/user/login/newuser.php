@@ -58,7 +58,6 @@ include "../template/menu.php" ?>
                     <input type="text" class="form-control" placeholder="Cpf" required autofocus name="cpf"value=<?php echo  $logado?$user->cpf.">":">"?>
                     <input type="text" class="form-control" placeholder="Email" required autofocus name="email"value=<?php echo  $logado?$user->email.">":">"?>
                     <input type="text" class="form-control" placeholder="Adress" required autofocus name="adress"value=<?php echo  $logado?$user->adress.">":">"?>
-                    <input type="text" class="form-control" placeholder="Login" required autofocus name="login"value=<?php echo  $logado?$user->login.">":">"?>
                     <input  type="hidden" class="form-control" placeholder="ativo" required autofocus name="ativo" value="0"value=<?php echo  $logado?$user->ativo.">":">"?>
 
                     <input type="password" class="form-control" placeholder="Password" required name="password">

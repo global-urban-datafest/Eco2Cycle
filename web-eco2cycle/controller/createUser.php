@@ -37,7 +37,7 @@ if ((isset($_SESSION['cliente']) && $_SESSION['cliente'] != '')) {
        "cpf" => $_POST['cpf'],
        "email"=> $_POST['email'],
        "adress"=> $_POST['adress'],
-       "login"=> $_POST['login'],
+       "login"=> $_POST['email'],
        "ativo"=> $_POST['ativo'],
        "pass"=>$_POST['password']
    );
